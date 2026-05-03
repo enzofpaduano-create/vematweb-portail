@@ -162,7 +162,7 @@ export default function Home() {
       <section className="relative py-48 bg-white overflow-hidden">
         <motion.div
           initial={{ scale: 1.2, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 0.18 }}
+          whileInView={{ scale: 1, opacity: 0.85 }}
           transition={{ duration: 2, ease: "easeOut" }}
           className="absolute inset-0 z-0"
         >
@@ -172,7 +172,9 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/40 z-1" />
+        {/* Left → soft white veil so the headline stays readable; right → image fully visible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent z-1" />
+        <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-white/80 to-transparent z-1" />
 
         <div className="container relative z-10 mx-auto px-4 md:px-6">
           <div className="max-w-3xl">

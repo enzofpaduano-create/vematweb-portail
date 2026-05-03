@@ -31,8 +31,8 @@ function InputField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-semibold text-zinc-300">
-        {label}{required && <span className="text-red-400 ml-1">*</span>}
+      <label className="text-sm font-semibold text-zinc-700">
+        {label}{required && <span className="text-accent ml-1">*</span>}
       </label>
       <input
         type={type}
@@ -40,7 +40,7 @@ function InputField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+        className="bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
       />
     </div>
   );
@@ -60,27 +60,27 @@ const URGENCY_OPTIONS: {
     label: "Normale",
     desc: "Intervention à planifier sous quelques jours",
     icon: Minus,
-    color: "text-zinc-300",
-    border: "border-zinc-600",
-    bg: "bg-zinc-700/50",
+    color: "text-zinc-700",
+    border: "border-zinc-400",
+    bg: "bg-zinc-100",
   },
   {
     value: "urgente",
     label: "Urgente",
     desc: "Intervention requise dans les 24–48h",
     icon: AlertTriangle,
-    color: "text-amber-400",
-    border: "border-amber-500/40",
-    bg: "bg-amber-500/10",
+    color: "text-amber-600",
+    border: "border-amber-500",
+    bg: "bg-amber-50",
   },
   {
     value: "tres_urgente",
     label: "Très urgente",
     desc: "Arrêt de chantier / sécurité immédiate requise",
     icon: AlertOctagon,
-    color: "text-red-400",
-    border: "border-red-500/40",
-    bg: "bg-red-500/10",
+    color: "text-accent",
+    border: "border-accent",
+    bg: "bg-accent/10",
   },
 ];
 
@@ -95,20 +95,20 @@ function FilePreviewItem({ file, onRemove }: { file: File; onRemove: () => void 
   return (
     <div className="relative group">
       {isImage && imgUrl ? (
-        <div className="w-20 h-20 rounded-xl overflow-hidden border border-zinc-700 bg-zinc-800">
+        <div className="w-20 h-20 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-50">
           <img src={imgUrl} alt={file.name} className="w-full h-full object-cover" />
         </div>
       ) : (
-        <div className="w-20 h-20 rounded-xl border border-zinc-700 bg-zinc-800 flex flex-col items-center justify-center gap-1 px-1">
-          <FileText className="w-7 h-7 text-orange-400/70 flex-shrink-0" />
+        <div className="w-20 h-20 rounded-xl border border-zinc-200 bg-zinc-50 flex flex-col items-center justify-center gap-1 px-1">
+          <FileText className="w-7 h-7 text-accent flex-shrink-0" />
           <span className="text-[9px] text-zinc-500 w-full truncate text-center px-1">{file.name}</span>
         </div>
       )}
-      <p className="text-[10px] text-zinc-600 text-center mt-1">{sizeMB} Mo</p>
+      <p className="text-[10px] text-zinc-500 text-center mt-1">{sizeMB} Mo</p>
       <button
         type="button"
         onClick={onRemove}
-        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-900 border border-zinc-700 rounded-full flex items-center justify-center text-zinc-500 hover:text-red-400 hover:border-red-400/50 transition-colors shadow-sm"
+        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white border border-zinc-300 rounded-full flex items-center justify-center text-zinc-500 hover:text-accent hover:border-accent transition-colors shadow-sm"
       >
         <X className="w-3 h-3" />
       </button>
@@ -235,25 +235,25 @@ export default function DemandeIntervention() {
 
   if (step === "success") {
     return (
-      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-16">
+      <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center px-4 py-16">
         <div className="w-full max-w-lg text-center">
-          <img src={vematLogo} alt="Vemat" className="h-7 brightness-0 invert mx-auto mb-10" />
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-10">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/15 flex items-center justify-center mx-auto mb-6">
-              <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+          <img src={vematLogo} alt="Vemat" className="h-20 md:h-24 mx-auto mb-10" />
+          <div className="bg-white border border-zinc-200 rounded-2xl p-10 shadow-xl">
+            <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="w-8 h-8 text-emerald-600" />
             </div>
-            <h1 className="text-2xl font-black text-white mb-2">Demande enregistrée !</h1>
-            <p className="text-zinc-400 text-sm mb-6">
+            <h1 className="text-2xl font-black text-zinc-950 mb-2">Demande enregistrée !</h1>
+            <p className="text-zinc-600 text-sm mb-6">
               Votre demande d'intervention a été transmise à notre équipe technique. Nous vous recontactons rapidement pour planifier l'intervention.
             </p>
-            <div className="bg-zinc-800 rounded-xl px-6 py-4 mb-8">
+            <div className="bg-zinc-50 border border-zinc-200 rounded-xl px-6 py-4 mb-8">
               <p className="text-xs text-zinc-500 mb-1">Référence de votre demande</p>
-              <p className="text-2xl font-black text-white font-mono tracking-wider">{reference}</p>
-              <p className="text-xs text-zinc-600 mt-1">Conservez cette référence pour tout suivi</p>
+              <p className="text-2xl font-black text-zinc-950 font-mono tracking-wider">{reference}</p>
+              <p className="text-xs text-zinc-500 mt-1">Conservez cette référence pour tout suivi</p>
             </div>
             <div className="space-y-3">
               <Link href="/">
-                <div className="flex items-center justify-center gap-2 w-full bg-white/10 hover:bg-white/15 text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors cursor-pointer">
+                <div className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors cursor-pointer">
                   <ArrowLeft className="w-4 h-4" />
                   Retour au site Vemat
                 </div>
@@ -266,7 +266,7 @@ export default function DemandeIntervention() {
                   setProblemDescription(""); setUrgency("normale"); setLocation("");
                   setAttachmentFiles([]);
                 }}
-                className="w-full text-zinc-500 hover:text-white text-sm py-2 transition-colors"
+                className="w-full text-zinc-500 hover:text-zinc-950 text-sm py-2 transition-colors"
               >
                 Soumettre une autre demande
               </button>
@@ -278,24 +278,24 @@ export default function DemandeIntervention() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 px-4 py-12">
+    <div className="min-h-screen bg-zinc-50 px-4 py-12">
       <div className="w-full max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
           <Link href="/">
-            <img src={vematLogo} alt="Vemat" className="h-7 brightness-0 invert mx-auto mb-6 cursor-pointer" />
+            <img src={vematLogo} alt="Vemat" className="h-20 md:h-24 mx-auto mb-6 cursor-pointer" />
           </Link>
-          <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-1.5 mb-4">
-            <Wrench className="w-3.5 h-3.5 text-orange-400" />
-            <span className="text-xs font-bold text-orange-400 uppercase tracking-widest">Demande d'intervention</span>
+          <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 rounded-full px-4 py-1.5 mb-4">
+            <Wrench className="w-3.5 h-3.5 text-accent" />
+            <span className="text-xs font-bold text-accent uppercase tracking-widest">Demande d'intervention</span>
           </div>
-          <h1 className="text-2xl font-black text-white">Signalez une panne ou un besoin d'entretien</h1>
-          <p className="text-zinc-500 text-sm mt-2">Notre équipe SAV vous prend en charge rapidement.</p>
+          <h1 className="text-2xl font-black text-zinc-950">Signalez une panne ou un besoin d'entretien</h1>
+          <p className="text-zinc-600 text-sm mt-2">Notre équipe SAV vous prend en charge rapidement.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Section 1: Coordonnées */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-5">01 — Vos coordonnées</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -310,7 +310,7 @@ export default function DemandeIntervention() {
           </div>
 
           {/* Section 2: Machine */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-5">02 — Identification de la machine</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -324,9 +324,9 @@ export default function DemandeIntervention() {
           </div>
 
           {/* Section 3: Urgence */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-5">
-              03 — Niveau d'urgence <span className="text-red-400">*</span>
+              03 — Niveau d'urgence <span className="text-accent">*</span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {URGENCY_OPTIONS.map(({ value, label, desc, icon: Icon, color, border, bg }) => (
@@ -336,12 +336,12 @@ export default function DemandeIntervention() {
                   onClick={() => setUrgency(value)}
                   className={`relative flex flex-col gap-2 p-4 rounded-xl border-2 text-left transition-all ${
                     urgency === value
-                      ? `${bg} ${border} ring-2 ring-offset-2 ring-offset-zinc-900 ring-current ${color}`
-                      : "bg-zinc-800 border-zinc-700 hover:border-zinc-600"
+                      ? `${bg} ${border} ${color} shadow-md`
+                      : "bg-white border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
                   }`}
                 >
                   <Icon className={`w-5 h-5 ${urgency === value ? color : "text-zinc-500"}`} />
-                  <p className={`text-sm font-bold ${urgency === value ? color : "text-zinc-300"}`}>{label}</p>
+                  <p className={`text-sm font-bold ${urgency === value ? color : "text-zinc-700"}`}>{label}</p>
                   <p className="text-xs text-zinc-500 leading-snug">{desc}</p>
                 </button>
               ))}
@@ -349,12 +349,12 @@ export default function DemandeIntervention() {
           </div>
 
           {/* Section 4: Description */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-5">04 — Description & localisation</h2>
             <div className="space-y-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-zinc-300">
-                  Description du problème <span className="text-red-400">*</span>
+                <label className="text-sm font-semibold text-zinc-700">
+                  Description du problème <span className="text-accent">*</span>
                 </label>
                 <textarea
                   value={problemDescription}
@@ -362,7 +362,7 @@ export default function DemandeIntervention() {
                   placeholder="Décrivez la panne, le dysfonctionnement ou les travaux d'entretien à réaliser. Précisez les symptômes, les erreurs affichées, la fréquence du problème…"
                   rows={5}
                   required
-                  className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+                  className="bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
                 />
               </div>
               <InputField
@@ -376,12 +376,12 @@ export default function DemandeIntervention() {
           </div>
 
           {/* Section 5: Pièces jointes */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-1">
               05 — Pièces jointes{" "}
-              <span className="text-zinc-600 normal-case font-semibold tracking-normal">(optionnel)</span>
+              <span className="text-zinc-400 normal-case font-semibold tracking-normal">(optionnel)</span>
             </h2>
-            <p className="text-xs text-zinc-600 mb-5">
+            <p className="text-xs text-zinc-500 mb-5">
               Photos de la panne, rapport de maintenance, bon de livraison… Formats acceptés : JPG, PNG, PDF · Max {MAX_SIZE_MB} Mo par fichier · {MAX_FILES} fichiers maximum
             </p>
 
@@ -399,7 +399,7 @@ export default function DemandeIntervention() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-2 border border-dashed border-zinc-700 hover:border-orange-500/50 bg-zinc-800 hover:bg-orange-500/5 text-zinc-400 hover:text-orange-300 text-sm font-semibold px-5 py-3 rounded-xl transition-all"
+                className="flex items-center gap-2 border border-dashed border-zinc-300 hover:border-accent bg-zinc-50 hover:bg-accent/5 text-zinc-600 hover:text-accent text-sm font-semibold px-5 py-3 rounded-xl transition-all"
               >
                 <Paperclip className="w-4 h-4" />
                 {attachmentFiles.length === 0 ? "Ajouter des fichiers" : `Ajouter d'autres fichiers (${attachmentFiles.length}/${MAX_FILES})`}
@@ -417,7 +417,7 @@ export default function DemandeIntervention() {
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-sm text-red-400">
+            <div className="bg-accent/10 border border-accent/40 rounded-xl px-4 py-3 text-sm text-accent">
               {error}
             </div>
           )}
@@ -425,7 +425,7 @@ export default function DemandeIntervention() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-500 disabled:opacity-60 text-white font-black text-sm px-6 py-4 rounded-xl transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-60 text-white font-black text-sm px-6 py-4 rounded-xl transition-colors shadow-md shadow-accent/20"
           >
             {loading ? (
               <><Loader2 className="w-4 h-4 animate-spin" />Envoi en cours…</>
@@ -434,7 +434,7 @@ export default function DemandeIntervention() {
             )}
           </button>
 
-          <p className="text-center text-xs text-zinc-600 pb-4">
+          <p className="text-center text-xs text-zinc-500 pb-4">
             En soumettant ce formulaire, vous acceptez d'être contacté par l'équipe Vemat Group.
           </p>
         </form>

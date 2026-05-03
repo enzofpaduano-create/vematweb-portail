@@ -259,9 +259,9 @@ export const translations = {
     },
     offices: {
       eyebrow: "Présence internationale",
-      title: "4 bureaux,",
+      title: "5 bureaux,",
       titleAccent: "21 pays d'opération",
-      subtitle: "De notre siège de Casablanca à nos branches de Nouadhibou, Lagos et Dubaï, Vemat Group rayonne sur l'Afrique et le Moyen-Orient.",
+      subtitle: "De Dubaï à notre siège de Casablanca, en passant par Lagos, Port Harcourt et Nouadhibou, Vemat Group rayonne sur l'Afrique et le Moyen-Orient.",
       statOffices: "Bureaux dans le monde",
       statCountries: "Pays d'opération",
       statContinents: "Continents",
@@ -1255,9 +1255,9 @@ export const translations = {
     },
     offices: {
       eyebrow: "International presence",
-      title: "4 offices,",
+      title: "5 offices,",
       titleAccent: "21 countries of operation",
-      subtitle: "From our Casablanca headquarters to our Nouadhibou, Lagos and Dubai branches, Vemat Group operates across Africa and the Middle East.",
+      subtitle: "From Dubai to our Casablanca headquarters, with Lagos, Port Harcourt and Nouadhibou branches, Vemat Group operates across Africa and the Middle East.",
       statOffices: "Offices worldwide",
       statCountries: "Countries served",
       statContinents: "Continents",

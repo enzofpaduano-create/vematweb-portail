@@ -90,7 +90,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex min-w-0 flex-1 items-center justify-end gap-3 xl:gap-5">
+          <nav className="hidden xl:flex min-w-0 flex-1 items-center justify-end gap-3 xl:gap-5">
             {/* Nav links */}
             <ul className="flex min-w-0 items-center gap-0.5 xl:gap-1">
               {navLinks.map((link) => (
@@ -183,7 +183,7 @@ export function Navbar() {
           </nav>
 
           {/* Mobile Nav */}
-          <div className="lg:hidden flex items-center gap-3">
+          <div className="xl:hidden flex items-center gap-3">
             {/* SAV visible mobile */}
             <Link
               href="/demande-intervention"
@@ -201,8 +201,8 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent side="right" className="bg-white text-zinc-950 border-zinc-100 w-[300px]">
                 <div className="flex flex-col h-full mt-8">
-                  <div className="mb-12 p-2 bg-zinc-950 inline-block rounded-lg self-start">
-                    <img src={vematLogo} alt="Vemat Group" className="h-8 w-auto" />
+                  <div className="mb-12 self-start">
+                    <img src={vematLogo} alt="Vemat Group" className="h-14 w-auto" />
                   </div>
 
                   <nav className="flex flex-col gap-5">

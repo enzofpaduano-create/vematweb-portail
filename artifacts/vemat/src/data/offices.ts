@@ -1,3 +1,5 @@
+import westchaseLogo from "@/assets/partners/westchase-logo.png";
+
 export type OfficeType = "hq" | "branch" | "partner";
 
 export type Office = {
@@ -7,12 +9,25 @@ export type Office = {
   type: OfficeType;
   partnerName?: string;
   partnerUrl?: string;
+  partnerLogo?: string;
   coords: [number, number];
   tagline: { fr: string; en: string };
   description: { fr: string; en: string };
 };
 
 export const offices: Office[] = [
+  {
+    id: "dubai",
+    city: "Dubaï",
+    country: { fr: "Émirats Arabes Unis", en: "United Arab Emirates" },
+    type: "branch",
+    coords: [55.2708, 25.2048],
+    tagline: { fr: "Branche Vemat", en: "Vemat branch" },
+    description: {
+      fr: "Plateforme stratégique pour le sourcing international et les opérations Moyen-Orient.",
+      en: "Strategic platform for international sourcing and Middle East operations.",
+    },
+  },
   {
     id: "casablanca",
     city: "Casablanca",
@@ -26,24 +41,13 @@ export const offices: Office[] = [
     },
   },
   {
-    id: "nouadhibou",
-    city: "Nouadhibou",
-    country: { fr: "Mauritanie", en: "Mauritania" },
-    type: "branch",
-    coords: [-17.0333, 20.9417],
-    tagline: { fr: "Branche Vemat", en: "Vemat branch" },
-    description: {
-      fr: "Bureau Vemat dédié à l'Afrique de l'Ouest atlantique, spécialiste du minier et de la pêche industrielle.",
-      en: "Vemat office serving Atlantic West Africa, specialised in mining and industrial fisheries.",
-    },
-  },
-  {
     id: "lagos",
     city: "Lagos",
     country: { fr: "Nigeria", en: "Nigeria" },
     type: "branch",
     partnerName: "Westchase Oil & Gas",
     partnerUrl: "http://westchaseoil.com/index.html",
+    partnerLogo: westchaseLogo,
     coords: [3.3792, 6.5244],
     tagline: { fr: "Branche Vemat", en: "Vemat branch" },
     description: {
@@ -52,15 +56,30 @@ export const offices: Office[] = [
     },
   },
   {
-    id: "dubai",
-    city: "Dubaï",
-    country: { fr: "Émirats Arabes Unis", en: "United Arab Emirates" },
+    id: "port-harcourt",
+    city: "Port Harcourt",
+    country: { fr: "Nigeria", en: "Nigeria" },
     type: "branch",
-    coords: [55.2708, 25.2048],
+    partnerName: "Westchase Oil & Gas",
+    partnerUrl: "http://westchaseoil.com/index.html",
+    partnerLogo: westchaseLogo,
+    coords: [7.0498, 4.8156],
     tagline: { fr: "Branche Vemat", en: "Vemat branch" },
     description: {
-      fr: "Plateforme stratégique pour le sourcing international et les opérations Moyen-Orient.",
-      en: "Strategic platform for international sourcing and Middle East operations.",
+      fr: "Bureau Vemat opérant sous l'enseigne Westchase Oil & Gas, au cœur du delta du Niger et de l'industrie pétrolière offshore.",
+      en: "Vemat office operating under the Westchase Oil & Gas brand, at the heart of the Niger Delta and offshore oil & gas industry.",
+    },
+  },
+  {
+    id: "nouadhibou",
+    city: "Nouadhibou",
+    country: { fr: "Mauritanie", en: "Mauritania" },
+    type: "branch",
+    coords: [-17.0333, 20.9417],
+    tagline: { fr: "Branche Vemat", en: "Vemat branch" },
+    description: {
+      fr: "Bureau Vemat dédié à l'Afrique de l'Ouest atlantique, spécialiste du minier.",
+      en: "Vemat office serving Atlantic West Africa, specialised in mining.",
     },
   },
 ];

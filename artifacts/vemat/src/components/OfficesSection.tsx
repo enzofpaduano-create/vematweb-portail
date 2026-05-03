@@ -14,16 +14,16 @@ export function OfficesSection() {
   const { t, lang } = useLang();
 
   return (
-    <section className="relative py-24 md:py-32 bg-zinc-950 overflow-hidden">
+    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
       <div
-        className="absolute inset-0 opacity-[0.025] pointer-events-none"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
+            "linear-gradient(rgba(24,24,27,1) 1px, transparent 1px), linear-gradient(90deg, rgba(24,24,27,1) 1px, transparent 1px)",
           backgroundSize: "64px 64px",
         }}
       />
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative mx-auto px-4 md:px-6">
         <div className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
@@ -40,7 +40,7 @@ export function OfficesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-4xl md:text-6xl font-heading font-extrabold text-white tracking-tighter leading-[1.05]"
+            className="text-4xl md:text-6xl font-heading font-extrabold text-zinc-950 tracking-tighter leading-[1.05]"
           >
             {t("offices.title")}{" "}
             <span className="text-accent">{t("offices.titleAccent")}</span>
@@ -50,7 +50,7 @@ export function OfficesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-lg md:text-xl text-zinc-400 mt-7 leading-relaxed font-medium"
+            className="text-lg md:text-xl text-zinc-600 mt-7 leading-relaxed font-medium"
           >
             {t("offices.subtitle")}
           </motion.p>
@@ -62,12 +62,12 @@ export function OfficesSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="lg:col-span-7 relative rounded-[2rem] border border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent p-4 md:p-6"
+            className="lg:col-span-7 relative rounded-[2rem] border border-zinc-200 bg-gradient-to-br from-zinc-50 to-white p-4 md:p-6 shadow-sm"
           >
             <AfricaMap />
           </motion.div>
 
-          <div className="lg:col-span-5 space-y-3">
+          <div className="lg:col-span-5 space-y-2">
             {offices.map((o, i) => {
               const Icon = iconForType[o.type];
               const isHQ = o.type === "hq";
@@ -78,39 +78,39 @@ export function OfficesSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.6, ease: "easeOut" }}
-                  className={`group relative p-6 rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
+                  className={`group relative p-4 rounded-2xl border transition-all duration-500 ${
                     isHQ
-                      ? "bg-gradient-to-br from-accent/15 via-accent/5 to-transparent border-accent/40 hover:border-accent"
-                      : "bg-white/[0.03] border-white/10 hover:border-accent/40 hover:bg-white/[0.05]"
+                      ? "bg-gradient-to-br from-accent/10 via-accent/5 to-white border-accent/50 hover:border-accent shadow-sm"
+                      : "bg-white border-zinc-200 hover:border-accent/40 hover:shadow-md"
                   }`}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3">
                     <div
-                      className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${
+                      className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-500 ${
                         isHQ
-                          ? "bg-accent text-zinc-950 shadow-lg shadow-accent/30"
-                          : "bg-white/[0.06] text-accent group-hover:bg-accent group-hover:text-zinc-950"
+                          ? "bg-accent text-white shadow-md shadow-accent/30"
+                          : "bg-zinc-100 text-accent group-hover:bg-accent group-hover:text-white"
                       }`}
                     >
-                      <Icon className="h-5 w-5" strokeWidth={2.5} />
+                      <Icon className="h-4 w-4" strokeWidth={2.5} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline justify-between gap-3 mb-1">
-                        <h3 className="text-xl font-heading font-extrabold text-white tracking-tight">
+                      <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                        <h3 className="text-base font-heading font-extrabold text-zinc-950 tracking-tight leading-tight">
                           {o.city}
                         </h3>
                         <span
-                          className={`text-[9px] font-black uppercase tracking-[0.2em] shrink-0 ${
+                          className={`text-[8px] font-black uppercase tracking-[0.2em] shrink-0 ${
                             isHQ ? "text-accent" : "text-zinc-500"
                           }`}
                         >
                           {o.tagline[lang]}
                         </span>
                       </div>
-                      <p className="text-sm text-zinc-400 font-semibold">
+                      <p className="text-xs text-zinc-700 font-semibold">
                         {o.country[lang]}
                       </p>
-                      <p className="text-sm text-zinc-500 mt-2 leading-relaxed">
+                      <p className="text-xs text-zinc-500 mt-1 leading-snug line-clamp-2">
                         {o.description[lang]}
                       </p>
                       {o.partnerUrl && (
@@ -118,10 +118,20 @@ export function OfficesSection() {
                           href={o.partnerUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-accent hover:text-white transition-colors"
+                          className="inline-flex items-center gap-2 mt-2 group/partner"
                         >
-                          {o.partnerName}
-                          <ArrowUpRight className="h-3.5 w-3.5" />
+                          {o.partnerLogo && (
+                            <img
+                              src={o.partnerLogo}
+                              alt={o.partnerName ?? ""}
+                              className="h-11 w-auto object-contain shrink-0 transition-transform duration-300 group-hover/partner:scale-105"
+                              draggable={false}
+                            />
+                          )}
+                          <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-[0.2em] text-accent group-hover/partner:text-zinc-950 transition-colors">
+                            {o.partnerName}
+                            <ArrowUpRight className="h-3 w-3" />
+                          </span>
                         </a>
                       )}
                     </div>
@@ -137,19 +147,19 @@ export function OfficesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.08] mt-16 md:mt-20 rounded-2xl overflow-hidden border border-white/5"
+          className="grid grid-cols-2 md:grid-cols-4 gap-px bg-zinc-200 mt-16 md:mt-20 rounded-2xl overflow-hidden border border-zinc-200"
         >
           {[
             { v: String(offices.length), l: t("offices.statOffices") },
             { v: `${ACTIVE_COUNTRY_COUNT}`, l: t("offices.statCountries") },
-            { v: "3", l: t("offices.statContinents") },
+            { v: "2", l: t("offices.statContinents") },
             { v: "24/7", l: t("offices.statSupport") },
           ].map((s, i) => (
-            <div key={i} className="bg-zinc-950 p-8 text-center">
+            <div key={i} className="bg-white p-8 text-center">
               <div className="text-4xl md:text-5xl font-heading font-extrabold text-accent">
                 {s.v}
               </div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-bold mt-3">
+              <div className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-bold mt-3">
                 {s.l}
               </div>
             </div>

@@ -38,15 +38,15 @@ function SelectField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-semibold text-zinc-300">
-        {label}{required && <span className="text-red-400 ml-1">*</span>}
+      <label className="text-sm font-semibold text-zinc-700">
+        {label}{required && <span className="text-accent ml-1">*</span>}
       </label>
       <div className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}
-          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent pr-10"
+          className="w-full bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent pr-10"
         >
           {children}
         </select>
@@ -73,8 +73,8 @@ function InputField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-semibold text-zinc-300">
-        {label}{required && <span className="text-red-400 ml-1">*</span>}
+      <label className="text-sm font-semibold text-zinc-700">
+        {label}{required && <span className="text-accent ml-1">*</span>}
       </label>
       <input
         type={type}
@@ -82,7 +82,7 @@ function InputField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+        className="bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
       />
     </div>
   );
@@ -227,32 +227,32 @@ export default function DemandeDevis() {
 
   if (step === "success") {
     return (
-      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-16">
+      <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center px-4 py-16">
         <div className="w-full max-w-lg text-center">
-          <img src={vematLogo} alt="Vemat" className="h-7 brightness-0 invert mx-auto mb-10" />
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-10">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/15 flex items-center justify-center mx-auto mb-6">
-              <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+          <img src={vematLogo} alt="Vemat" className="h-20 md:h-24 mx-auto mb-10" />
+          <div className="bg-white border border-zinc-200 rounded-2xl p-10 shadow-xl">
+            <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="w-8 h-8 text-emerald-600" />
             </div>
-            <h1 className="text-2xl font-black text-white mb-2">Demande envoyée !</h1>
-            <p className="text-zinc-400 text-sm mb-6">
+            <h1 className="text-2xl font-black text-zinc-950 mb-2">Demande envoyée !</h1>
+            <p className="text-zinc-600 text-sm mb-6">
               Nous avons bien reçu votre demande de devis. Notre équipe vous contactera dans les plus brefs délais.
             </p>
-            <div className="bg-zinc-800 rounded-xl px-6 py-4 mb-8">
+            <div className="bg-zinc-50 border border-zinc-200 rounded-xl px-6 py-4 mb-8">
               <p className="text-xs text-zinc-500 mb-1">Référence de votre demande</p>
-              <p className="text-2xl font-black text-white font-mono tracking-wider">{reference}</p>
-              <p className="text-xs text-zinc-600 mt-1">Conservez cette référence pour tout suivi</p>
+              <p className="text-2xl font-black text-zinc-950 font-mono tracking-wider">{reference}</p>
+              <p className="text-xs text-zinc-500 mt-1">Conservez cette référence pour tout suivi</p>
             </div>
             <div className="space-y-3">
               <Link href="/">
-                <div className="flex items-center justify-center gap-2 w-full bg-white/10 hover:bg-white/15 text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors cursor-pointer">
+                <div className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors cursor-pointer">
                   <ArrowLeft className="w-4 h-4" />
                   Retour au site Vemat
                 </div>
               </Link>
               <button
                 onClick={resetForm}
-                className="w-full text-zinc-500 hover:text-white text-sm py-2 transition-colors"
+                className="w-full text-zinc-500 hover:text-zinc-950 text-sm py-2 transition-colors"
               >
                 Soumettre une autre demande
               </button>
@@ -266,24 +266,24 @@ export default function DemandeDevis() {
   // ── Form ────────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-zinc-950 px-4 py-12">
+    <div className="min-h-screen bg-zinc-50 px-4 py-12">
       <div className="w-full max-w-2xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-10">
           <Link href="/">
-            <img src={vematLogo} alt="Vemat" className="h-7 brightness-0 invert mx-auto mb-6 cursor-pointer" />
+            <img src={vematLogo} alt="Vemat" className="h-20 md:h-24 mx-auto mb-6 cursor-pointer" />
           </Link>
-          <div className="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-4">
+          <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 rounded-full px-4 py-1.5 mb-4">
             {fromCart
-              ? <><Package className="w-3.5 h-3.5 text-sky-400" /><span className="text-xs font-bold text-sky-400 uppercase tracking-widest">Devis pièces de rechange</span></>
-              : <><FileText className="w-3.5 h-3.5 text-sky-400" /><span className="text-xs font-bold text-sky-400 uppercase tracking-widest">Demande de devis</span></>
+              ? <><Package className="w-3.5 h-3.5 text-accent" /><span className="text-xs font-bold text-accent uppercase tracking-widest">Devis pièces de rechange</span></>
+              : <><FileText className="w-3.5 h-3.5 text-accent" /><span className="text-xs font-bold text-accent uppercase tracking-widest">Demande de devis</span></>
             }
           </div>
-          <h1 className="text-2xl font-black text-white">
+          <h1 className="text-2xl font-black text-zinc-950">
             {fromCart ? "Récapitulatif de votre panier" : "Obtenez un devis personnalisé"}
           </h1>
-          <p className="text-zinc-500 text-sm mt-2">
+          <p className="text-zinc-600 text-sm mt-2">
             {fromCart
               ? "Vérifiez vos pièces puis remplissez vos coordonnées. Notre équipe vous répond sous 24h."
               : "Sélectionnez l'équipement souhaité. Notre équipe vous répond sous 24h."}
@@ -294,27 +294,27 @@ export default function DemandeDevis() {
 
           {/* ── MODE A: PIÈCES DE RECHANGE (cart) ─────────────────────────── */}
           {fromCart && (
-            <div className="bg-zinc-900 border border-sky-500/20 rounded-2xl p-6">
+            <div className="bg-white border border-accent/30 rounded-2xl p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <ShoppingCart className="w-4 h-4 text-sky-400" />
-                  <h2 className="text-sm font-black uppercase tracking-widest text-sky-400">Pièces sélectionnées</h2>
+                  <ShoppingCart className="w-4 h-4 text-accent" />
+                  <h2 className="text-sm font-black uppercase tracking-widest text-accent">Pièces sélectionnées</h2>
                 </div>
-                <span className="text-xs text-zinc-500 bg-zinc-800 rounded-full px-2.5 py-0.5">
+                <span className="text-xs text-zinc-600 bg-zinc-100 rounded-full px-2.5 py-0.5 font-semibold">
                   {cartItems.length} référence{cartItems.length > 1 ? "s" : ""}
                 </span>
               </div>
               <div className="space-y-2">
                 {cartItems.map((item) => (
-                  <div key={item.sku} className="flex items-center justify-between bg-zinc-800 rounded-xl px-4 py-3 gap-3">
+                  <div key={item.sku} className="flex items-center justify-between bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 gap-3">
                     <div className="min-w-0">
-                      <p className="text-sm text-white font-semibold truncate">{item.title}</p>
+                      <p className="text-sm text-zinc-950 font-semibold truncate">{item.title}</p>
                       <p className="text-xs text-zinc-500 mt-0.5">{item.brand} · Réf. {item.sku} · Qté : {item.quantity}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => setCartItems((prev) => prev.filter((i) => i.sku !== item.sku))}
-                      className="text-zinc-600 hover:text-red-400 transition-colors flex-shrink-0"
+                      className="text-zinc-400 hover:text-accent transition-colors flex-shrink-0"
                       aria-label="Retirer"
                     >
                       <X className="w-4 h-4" />
@@ -324,7 +324,7 @@ export default function DemandeDevis() {
               </div>
               {cartItems.length === 0 && (
                 <p className="text-sm text-zinc-500 text-center py-2">
-                  Panier vide. <Link href="/pieces-de-rechange" className="text-sky-400 hover:underline">Retourner au catalogue</Link>
+                  Panier vide. <Link href="/pieces-de-rechange" className="text-accent hover:underline font-semibold">Retourner au catalogue</Link>
                 </p>
               )}
             </div>
@@ -332,9 +332,9 @@ export default function DemandeDevis() {
 
           {/* ── MODE B: MACHINE / ÉQUIPEMENT ──────────────────────────────── */}
           {!fromCart && (
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+            <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-5">
-                <Wrench className="w-4 h-4 text-zinc-500" />
+                <Wrench className="w-4 h-4 text-accent" />
                 <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500">01 — Machine / équipement souhaité</h2>
               </div>
               <div className="space-y-4">
@@ -364,8 +364,8 @@ export default function DemandeDevis() {
                 )}
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-semibold text-zinc-300">
-                    Quantité <span className="text-red-400 ml-1">*</span>
+                  <label className="text-sm font-semibold text-zinc-700">
+                    Quantité <span className="text-accent ml-1">*</span>
                   </label>
                   <input
                     type="number"
@@ -374,7 +374,7 @@ export default function DemandeDevis() {
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     required
-                    className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent w-32"
+                    className="bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent w-32"
                   />
                 </div>
               </div>
@@ -382,7 +382,7 @@ export default function DemandeDevis() {
           )}
 
           {/* ── COORDONNÉES (both modes) ───────────────────────────────────── */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-5">
               {fromCart ? "01" : "02"} — Vos coordonnées
             </h2>
@@ -399,24 +399,24 @@ export default function DemandeDevis() {
           </div>
 
           {/* ── INFORMATIONS COMPLÉMENTAIRES (both modes) ─────────────────── */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
             <h2 className="text-sm font-black uppercase tracking-widest text-zinc-500 mb-5">
               {fromCart ? "02" : "03"} — Informations complémentaires
             </h2>
             <div className="space-y-4">
               <InputField label="Localisation / Chantier" value={location} onChange={setLocation} placeholder="Casablanca, Maroc" />
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-zinc-300">Date souhaitée</label>
+                <label className="text-sm font-semibold text-zinc-700">Date souhaitée</label>
                 <input
                   type="date"
                   value={desiredDate}
                   onChange={(e) => setDesiredDate(e.target.value)}
                   min={new Date().toISOString().split("T")[0]}
-                  className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                  className="bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-zinc-300">Notes / Précisions</label>
+                <label className="text-sm font-semibold text-zinc-700">Notes / Précisions</label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
@@ -426,14 +426,14 @@ export default function DemandeDevis() {
                       : "Durée de location souhaitée, contraintes de chantier, spécifications particulières…"
                   }
                   rows={4}
-                  className="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent resize-none"
+                  className="bg-white border border-zinc-300 rounded-xl px-4 py-3 text-zinc-950 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
                 />
               </div>
             </div>
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-sm text-red-400">
+            <div className="bg-accent/10 border border-accent/40 rounded-xl px-4 py-3 text-sm text-accent">
               {error}
             </div>
           )}
@@ -441,7 +441,7 @@ export default function DemandeDevis() {
           <button
             type="submit"
             disabled={loading || (fromCart && cartItems.length === 0)}
-            className="w-full flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-500 disabled:opacity-60 text-white font-black text-sm px-6 py-4 rounded-xl transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-60 text-white font-black text-sm px-6 py-4 rounded-xl transition-colors shadow-md shadow-accent/20"
           >
             {loading
               ? <><Loader2 className="w-4 h-4 animate-spin" />Envoi en cours…</>
@@ -449,7 +449,7 @@ export default function DemandeDevis() {
             }
           </button>
 
-          <p className="text-center text-xs text-zinc-600 pb-4">
+          <p className="text-center text-xs text-zinc-500 pb-4">
             En soumettant ce formulaire, vous acceptez d'être contacté par l'équipe Vemat Group.
           </p>
         </form>
