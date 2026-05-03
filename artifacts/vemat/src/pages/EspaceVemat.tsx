@@ -46,7 +46,7 @@ export default function EspaceVemat() {
     <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-16">
       {/* Logo */}
       <div className="text-center mb-14">
-        <img src={vematLogo} alt="Vemat Group" className="h-9 brightness-0 invert mx-auto mb-6" />
+        <img src={vematLogo} alt="Vemat Group" className="h-20 w-auto brightness-0 invert mx-auto mb-6" />
         <h1 className="text-3xl font-black text-white">Portail Vemat</h1>
         <p className="text-zinc-500 mt-2">Choisissez votre espace de connexion</p>
       </div>

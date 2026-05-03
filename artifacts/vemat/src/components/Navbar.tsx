@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Phone, Mail, LayoutGrid, Wrench, FileText } from "lucide-react";
+import { Menu, Phone, Mail, LayoutGrid, Wrench, FileText, Package } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useLang } from "@/i18n/I18nProvider";
@@ -20,13 +20,14 @@ export function Navbar() {
   const isHome = location === "/";
   const isScrolled = scrolled || !isHome;
 
+  // Main navigation = product/info pages only. Action shortcuts (devis, pièces
+  // détachées, SAV) live in the right-hand action area for clarity.
   const navLinks = [
     { href: "/grues",                    label: t("nav.grues") },
     { href: "/nacelles",                 label: t("nav.nacelles") },
     { href: "/elevateurs-telescopiques", label: t("nav.elevateurs") },
     { href: "/construction",             label: t("nav.construction") },
     { href: "/services",                 label: t("nav.services") },
-    { href: "/pieces-de-rechange",       label: t("nav.pdr") },
     { href: "/blog",                     label: t("nav.blog") },
     { href: "/a-propos",                 label: t("nav.apropos") },
   ];
@@ -129,33 +130,47 @@ export function Navbar() {
               {/* Divider */}
               <div className={`w-px h-5 ${isScrolled ? "bg-zinc-200" : "bg-white/20"}`} />
 
-              {/* Devis — icône + label xl */}
+              {/* Devis machine — texte + icône */}
               <Link
                 href="/demande-devis"
-                title="Demande de devis"
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-all ${
+                title={t("nav.devisRequest")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${
                   isScrolled
-                    ? "text-zinc-500 hover:text-sky-600 hover:bg-sky-50"
+                    ? "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100"
                     : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 shrink-0" />
-                <span className="hidden xl:inline">{t("nav.devisShort")}</span>
+                <span>{t("nav.devisShort")}</span>
               </Link>
 
-              {/* Intervention SAV — bouton principal orange */}
+              {/* Pièces détachées — texte + icône */}
+              <Link
+                href="/pieces-de-rechange"
+                title={t("nav.pdrAction")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${
+                  isScrolled
+                    ? "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                <Package className="w-3.5 h-3.5 shrink-0" />
+                <span>{t("nav.pdrAction")}</span>
+              </Link>
+
+              {/* SAV — bouton principal rouge (action urgente) */}
               <Link
                 href="/demande-intervention"
-                className="flex items-center gap-1.5 rounded-full bg-orange-500 hover:bg-orange-400 px-3 py-1.5 text-[11px] font-bold text-white transition-all shadow-sm"
+                className="flex items-center gap-1.5 rounded-full bg-accent hover:bg-accent/90 px-3 py-1.5 text-[11px] font-bold text-accent-foreground transition-all shadow-sm"
               >
                 <Wrench className="w-3.5 h-3.5 shrink-0" />
-                <span>SAV</span>
+                <span>{t("nav.sav")}</span>
               </Link>
 
               {/* Portail — icône seule */}
               <Link
                 href="/espace-vemat"
-                title="Portail Vemat"
+                title={t("nav.portal")}
                 className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${
                   isScrolled
                     ? "text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100"
@@ -172,10 +187,10 @@ export function Navbar() {
             {/* SAV visible mobile */}
             <Link
               href="/demande-intervention"
-              className="flex items-center gap-1.5 rounded-full bg-orange-500 hover:bg-orange-400 px-3 py-1.5 text-[11px] font-bold text-white transition-all"
+              className="flex items-center gap-1.5 rounded-full bg-accent hover:bg-accent/90 px-3 py-1.5 text-[11px] font-bold text-accent-foreground transition-all"
             >
               <Wrench className="w-3.5 h-3.5" />
-              SAV
+              {t("nav.sav")}
             </Link>
 
             <Sheet>
@@ -205,11 +220,15 @@ export function Navbar() {
                   </nav>
 
                   <div className="mt-10 pt-8 border-t border-zinc-100 space-y-3">
-                    <Link href="/demande-devis" className="flex items-center gap-2 text-sm font-bold text-sky-600 hover:text-sky-500 transition-colors">
+                    <Link href="/demande-devis" className="flex items-center gap-2 text-sm font-bold text-zinc-700 hover:text-zinc-950 transition-colors">
                       <FileText className="w-4 h-4" />
                       {t("nav.devisRequest")}
                     </Link>
-                    <Link href="/demande-intervention" className="flex items-center gap-2 text-sm font-bold text-orange-500 hover:text-orange-400 transition-colors">
+                    <Link href="/pieces-de-rechange" className="flex items-center gap-2 text-sm font-bold text-zinc-700 hover:text-zinc-950 transition-colors">
+                      <Package className="w-4 h-4" />
+                      {t("nav.pdrAction")}
+                    </Link>
+                    <Link href="/demande-intervention" className="flex items-center gap-2 text-sm font-bold text-accent hover:text-accent/80 transition-colors">
                       <Wrench className="w-4 h-4" />
                       {t("nav.interventionSav")}
                     </Link>

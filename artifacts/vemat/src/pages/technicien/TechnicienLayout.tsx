@@ -1,17 +1,20 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { CalendarDays, ClipboardList, LogOut, Wrench } from "lucide-react";
+import { CalendarDays, ClipboardList, LogOut, Wrench, BookOpen } from "lucide-react";
 import { useTechnicienAuth } from "@/contexts/TechnicienAuthContext";
+import { useLang } from "@/i18n/I18nProvider";
 import vematLogo from "@/assets/vemat-logo.png";
 
 const NAV = [
   { href: "/espace-technicien/missions", icon: CalendarDays, label: "Mes missions" },
   { href: "/espace-technicien/historique", icon: ClipboardList, label: "Historique" },
+  { href: "/espace-technicien/catalogues", icon: BookOpen, label: "Catalogues" },
 ];
 
 export function TechnicienLayout({ children }: { children: React.ReactNode }) {
   const [location, navigate] = useLocation();
   const { technician, signOut, loading, user } = useTechnicienAuth();
+  const { lang, setLang } = useLang();
 
   useEffect(() => {
     if (!loading && !user) navigate("/espace-technicien/connexion");
@@ -36,7 +39,7 @@ export function TechnicienLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="w-60 bg-zinc-900 border-r border-zinc-800 flex flex-col fixed left-0 top-0 h-full z-40">
         <div className="px-5 py-5 border-b border-zinc-800">
-          <img src={vematLogo} alt="Vemat" className="h-6 brightness-0 invert mb-3" />
+          <img src={vematLogo} alt="Vemat" className="h-12 w-auto brightness-0 invert mb-4" />
           <div className="flex items-center gap-2">
             <Wrench className="w-3 h-3 text-orange-400" />
             <p className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-400">Espace Technicien</p>
@@ -77,10 +80,18 @@ export function TechnicienLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <button
+            onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+            className="w-full flex items-center gap-2 text-xs text-zinc-500 hover:text-white transition-colors px-0 py-1"
+            aria-label="Toggle language"
+          >
+            <span className="text-sm">🌐</span>
+            <span>{lang === "fr" ? "English" : "Français"}</span>
+          </button>
+          <button
             onClick={async () => { await signOut(); navigate("/espace-technicien/connexion"); }}
             className="w-full flex items-center gap-2 text-xs text-zinc-500 hover:text-red-400 transition-colors py-1"
           >
-            <LogOut className="w-3.5 h-3.5" /> Déconnexion
+            <LogOut className="w-3.5 h-3.5" /> {lang === "en" ? "Sign out" : "Déconnexion"}
           </button>
         </div>
       </aside>

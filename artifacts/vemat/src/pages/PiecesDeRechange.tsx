@@ -11,7 +11,8 @@ import {
   ChevronRight,
   ChevronLeft,
   Layers,
-  ExternalLink,
+  Info,
+  Ruler,
 } from "lucide-react";
 import { useSEO, useScrollTop } from "@/hooks/use-seo";
 import { useLang } from "@/i18n/I18nProvider";
@@ -27,25 +28,36 @@ import vematLogo from "@/assets/vemat-logo.png";
 interface CatalogProduct {
   sku: string;
   title: string;
+  titleFr?: string;
   image: string | null;
-  url: string;
+  attributes?: Record<string, string>;
 }
 
 interface CatalogSubcategory {
   name: string;
+  nameFr?: string;
   slug: string;
-  url: string;
 }
 
 interface CatalogCategory {
   name: string;
+  nameFr?: string;
   slug: string;
-  url: string;
   productCount: number;
   icon?: string;
   subcategories: CatalogSubcategory[];
   products: CatalogProduct[];
 }
+
+// FR labels for product physical-attribute keys
+const ATTR_LABEL_FR: Record<string, string> = {
+  Weight: "Poids",
+  Length: "Longueur",
+  Width: "Largeur",
+  Height: "Hauteur",
+  Diameter: "Diamètre",
+  Volume: "Volume",
+};
 
 interface PartsCatalog {
   supplier: string;
@@ -100,7 +112,7 @@ const BRANDS = [
     logo: jlgLogo,
     darkLogo: false,
     catalogUrl: "/jlg-parts-catalog.json",
-    description: { fr: "12 092 pièces d'origine · 723 catégories", en: "12,092 original parts · 723 categories" },
+    description: { fr: "11 514 pièces d'origine · 17 catégories", en: "11,514 original parts · 17 categories" },
     siteLabel: "JLG.com",
   },
   {
@@ -109,8 +121,8 @@ const BRANDS = [
     logo: terexLogo,
     darkLogo: false,
     catalogUrl: "/terex-parts-catalog.json",
-    description: { fr: "326 pièces d'origine · 17 catégories", en: "326 original parts · 17 categories" },
-    siteLabel: "myparts.terex.com",
+    description: { fr: "8 486 pièces d'origine · 15 catégories", en: "8,486 original parts · 15 categories" },
+    siteLabel: "partsmarket.terex.com",
   },
 ];
 
@@ -127,23 +139,22 @@ const CATEGORY_ICONS: Record<string, string> = {
   "aftermarket-attachments": "🔗",
   "aftermarket-engine-parts": "🛠️",
   clearsky: "✨",
-  "terex-utilities-auger-tooling": "🔩",
-  "terex-utilities-bodies-cabs-running-gear": "🚛",
-  "terex-utilities-booms-jibs-buckets": "🏗️",
-  "terex-utilities-covers": "🛡️",
-  "tu-deals": "🏷️",
-  "terex-utilities-decals": "🎨",
-  "terex-utilities-electrical-electronics": "⚡",
-  "terex-utilities-engine-components": "⚙️",
-  "terex-utilities-fabricated-components": "🔧",
-  "terex-utilities-filters-fluids": "🧰",
-  "terex-utilities-hardware": "🔩",
-  "terex-utilities-hoses-tubes": "🔗",
-  "terex-utilities-hydraulics": "💧",
-  "terex-utilities-jacks-outriggers-ground-protection": "🦾",
-  "terex-utilities-power-train": "⚙️",
-  "terex-utilities-preventative-maintenance-parts": "🛠️",
-  "terex-utilities-ropes-winches-hooks": "⚓",
+  // Terex Partsmarket top-level categories
+  "cabs-accessories-and-rops": "🚛",
+  "electrical-and-electronic-components": "⚡",
+  "internal-combustion-engines-and-fuel-systems": "⛽",
+  "fluid-transfer-and-control": "💧",
+  "hardware-and-fasteners": "🔩",
+  "hydraulic-and-pneumatic-systems": "🔧",
+  "manufacturing-consumables-and-tools": "🛠️",
+  "mechanical-parts-and-components": "⚙️",
+  "mild-steel-products": "🧱",
+  "plastics-polymers-and-rubber-products": "🦿",
+  "product-identification-and-labeling": "🏷️",
+  "running-gear-and-chassis-components": "🛞",
+  "structural-components": "🏗️",
+  "transmission-and-drive-system": "🔁",
+  "_other": "📦",
 };
 
 // ─── Supplier ProductCard ─────────────────────────────────────────────────────
@@ -154,13 +165,18 @@ function ProductCard({
   inCart,
   onAdd,
   onImageClick,
+  onOpenDetail,
+  lang,
 }: {
   product: CatalogProduct;
   brand: string;
   inCart: boolean;
   onAdd: (p: CatalogProduct) => void;
   onImageClick: (src: string) => void;
+  onOpenDetail: (p: CatalogProduct) => void;
+  lang: "fr" | "en";
 }) {
+  const displayTitle = lang === "fr" && product.titleFr ? product.titleFr : product.title;
   const [imgError, setImgError] = useState(false);
   const hasImg = !!(product.image && !imgError);
 
@@ -196,40 +212,40 @@ function ProductCard({
 
       <div className="p-5 flex flex-col flex-1">
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent mb-1">{brand}</p>
-        <h3 className="text-sm font-bold text-zinc-950 leading-snug mb-2 line-clamp-2 flex-1">
-          {product.title}
-        </h3>
+        {brand === "Terex" ? (
+          <button
+            type="button"
+            onClick={() => onOpenDetail(product)}
+            className="text-sm font-bold text-zinc-950 leading-snug mb-2 line-clamp-2 flex-1 text-left hover:text-accent transition-colors cursor-pointer"
+            title={lang === "fr" ? "Voir les détails" : "View details"}
+          >
+            {displayTitle}
+          </button>
+        ) : (
+          <h3 className="text-sm font-bold text-zinc-950 leading-snug mb-2 line-clamp-2 flex-1">
+            {displayTitle}
+          </h3>
+        )}
         <p className="text-[10px] font-mono text-zinc-400 bg-zinc-50 px-2 py-1 rounded-lg inline-block mb-4">
           REF: {product.sku}
         </p>
 
-        <div className="flex gap-2">
-          <Button
-            onClick={() => onAdd(product)}
-            disabled={inCart}
-            size="sm"
-            className={`flex-1 h-10 rounded-xl font-black uppercase tracking-widest text-[9px] transition-all ${
-              inCart ? "bg-zinc-100 text-zinc-400" : "bg-zinc-950 text-white hover:bg-accent"
-            }`}
-          >
-            {inCart ? (
-              <span className="flex items-center gap-1.5">
-                <Check className="h-3 w-3" /> Ajouté
-              </span>
-            ) : (
-              "Devis"
-            )}
-          </Button>
-          <a
-            href={product.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="h-10 w-10 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-zinc-950 hover:border-zinc-400 transition-colors"
-            title={`Voir sur ${brand}`}
-          >
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
-        </div>
+        <Button
+          onClick={() => onAdd(product)}
+          disabled={inCart}
+          size="sm"
+          className={`w-full h-10 rounded-xl font-black uppercase tracking-widest text-[9px] transition-all ${
+            inCart ? "bg-zinc-100 text-zinc-400" : "bg-zinc-950 text-white hover:bg-accent"
+          }`}
+        >
+          {inCart ? (
+            <span className="flex items-center gap-1.5">
+              <Check className="h-3 w-3" /> {lang === "fr" ? "Ajouté" : "Added"}
+            </span>
+          ) : (
+            lang === "fr" ? "Devis" : "Quote"
+          )}
+        </Button>
       </div>
     </motion.div>
   );
@@ -351,6 +367,9 @@ export default function PiecesDeRechange() {
 
   // ── Lightbox ──
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+
+  // ── Product detail modal ──
+  const [detailProduct, setDetailProduct] = useState<CatalogProduct | null>(null);
 
   // ── Global search state ──
   const [globalQuery, setGlobalQuery] = useState("");
@@ -500,7 +519,10 @@ export default function PiecesDeRechange() {
     const q = search.toLowerCase();
     if (!q) return activeCategory.products;
     return activeCategory.products.filter(
-      (p) => p.title.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q),
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        (p.titleFr ?? "").toLowerCase().includes(q) ||
+        p.sku.toLowerCase().includes(q),
     );
   }, [activeCategory, search]);
 
@@ -508,7 +530,9 @@ export default function PiecesDeRechange() {
     if (!activeCatalog) return [];
     const q = search.toLowerCase();
     if (!q) return activeCatalog.categories;
-    return activeCatalog.categories.filter((c) => c.name.toLowerCase().includes(q));
+    return activeCatalog.categories.filter(
+      (c) => c.name.toLowerCase().includes(q) || (c.nameFr ?? "").toLowerCase().includes(q),
+    );
   }, [activeCatalog, search]);
 
   // ── Filtered Vemat data ──
@@ -571,8 +595,11 @@ export default function PiecesDeRechange() {
       let count = 0;
       outer: for (const cat of catalog.categories) {
         for (const prod of cat.products) {
-          if (prod.title.toLowerCase().includes(q) || prod.sku.toLowerCase().includes(q)) {
-            results.push({ source: brandId, sku: prod.sku, title: prod.title, subtitle: cat.name, category: cat });
+          const titleFr = (prod.titleFr ?? "").toLowerCase();
+          if (prod.title.toLowerCase().includes(q) || titleFr.includes(q) || prod.sku.toLowerCase().includes(q)) {
+            const displayTitle = lang === "fr" && prod.titleFr ? prod.titleFr : prod.title;
+            const displaySubtitle = lang === "fr" && cat.nameFr ? cat.nameFr : cat.name;
+            results.push({ source: brandId, sku: prod.sku, title: displayTitle, subtitle: displaySubtitle, category: cat });
             count++;
             if (count >= 5) break outer;
           }
@@ -666,7 +693,7 @@ export default function PiecesDeRechange() {
                   </span>
                 </span>
               )}
-              {!isVemat && view === "products" && activeCategory?.name}
+              {!isVemat && view === "products" && activeCategory && (lang === "fr" && activeCategory.nameFr ? activeCategory.nameFr : activeCategory.name)}
 
               {/* Vemat stock views */}
               {isVemat && vematView === "families" && (
@@ -1092,43 +1119,6 @@ export default function PiecesDeRechange() {
                 </div>
               </div>
 
-              {/* Catalogues techniques (DocWare / partsbook) */}
-              <div className="mt-12">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-4 flex items-center gap-2">
-                  <span className="block w-6 h-px bg-zinc-300" />
-                  {lang === "fr" ? "Catalogues techniques" : "Technical catalogs"}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <a
-                    href="/pieces-de-rechange/terex/catalogue/trt-35"
-                    className="group relative bg-white rounded-[2.5rem] border border-zinc-100 p-8 flex flex-col items-start gap-6 hover:border-accent/30 hover:shadow-soft transition-all duration-300 text-left overflow-hidden"
-                  >
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-accent/5 rounded-full -translate-y-10 translate-x-10 group-hover:bg-accent/10 transition-colors duration-500" />
-                    <div className="h-14 flex items-center">
-                      <img src={terexLogo} alt="Terex" className="h-full object-contain" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className="text-2xl font-heading font-extrabold text-zinc-950 tracking-tight">
-                          Terex TRT 35
-                        </span>
-                        <span className="px-2.5 py-0.5 bg-accent/10 text-accent text-[10px] font-black uppercase tracking-widest rounded-full border border-accent/20">
-                          Catalogue
-                        </span>
-                      </div>
-                      <p className="text-zinc-500 text-sm font-medium">
-                        {lang === "fr"
-                          ? "231 sous-assemblages · 133 schémas · 2 113 pièces (8 niveaux)"
-                          : "231 sub-assemblies · 133 diagrams · 2,113 parts (8 levels)"}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 text-accent text-xs font-black uppercase tracking-widest mt-auto group-hover:gap-3 transition-all">
-                      {lang === "fr" ? "Ouvrir le catalogue" : "Open catalog"}
-                      <ChevronRight className="h-4 w-4" />
-                    </div>
-                  </a>
-                </div>
-              </div>
             </motion.div>
           )}
 
@@ -1158,11 +1148,11 @@ export default function PiecesDeRechange() {
                       </span>
                       <div className="flex-1">
                         <h3 className="font-black text-zinc-950 text-base leading-snug mb-1 group-hover:text-accent transition-colors">
-                          {cat.name}
+                          {lang === "fr" && cat.nameFr ? cat.nameFr : cat.name}
                         </h3>
                         <p className="text-xs text-zinc-400 font-medium">
                           {cat.productCount.toLocaleString()} {copy.parts}
-                          {cat.subcategories.length > 0 && ` · ${cat.subcategories.length} sous-catégories`}
+                          {cat.subcategories.length > 0 && ` · ${cat.subcategories.length} ${lang === "fr" ? "sous-catégories" : "subcategories"}`}
                         </p>
                       </div>
                       <div className="flex items-center gap-1 text-accent text-[10px] font-black uppercase tracking-widest group-hover:gap-2 transition-all">
@@ -1187,19 +1177,21 @@ export default function PiecesDeRechange() {
                 <div className="flex flex-wrap gap-2 mb-8">
                   <div className="flex items-center gap-1.5 text-zinc-400 mr-2">
                     <Layers className="h-3.5 w-3.5" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Sous-catégories</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                      {lang === "fr" ? "Sous-catégories" : "Subcategories"}
+                    </span>
                   </div>
-                  {activeCategory.subcategories.map((sub) => (
-                    <a
-                      key={sub.slug}
-                      href={sub.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 bg-white border border-zinc-200 rounded-full text-xs font-bold text-zinc-600 hover:border-accent/40 hover:text-zinc-950 transition-colors"
-                    >
-                      {sub.name}
-                    </a>
-                  ))}
+                  {activeCategory.subcategories.map((sub) => {
+                    const subLabel = lang === "fr" && sub.nameFr ? sub.nameFr : sub.name;
+                    return (
+                      <span
+                        key={sub.slug}
+                        className="px-3 py-1.5 bg-white border border-zinc-200 rounded-full text-xs font-bold text-zinc-600"
+                      >
+                        {subLabel}
+                      </span>
+                    );
+                  })}
                 </div>
               )}
 
@@ -1219,31 +1211,108 @@ export default function PiecesDeRechange() {
                         inCart={cart.some((i) => i.sku === product.sku)}
                         onAdd={addToCart}
                         onImageClick={setLightboxSrc}
+                        onOpenDetail={setDetailProduct}
+                        lang={lang as "fr" | "en"}
                       />
                     ))}
                   </div>
 
-                  {activeCategory.productCount > 48 && activeBrandConfig && (
-                    <div className="mt-10 flex justify-center">
-                      <a
-                        href={activeCategory.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-zinc-200 rounded-2xl text-sm font-bold text-zinc-600 hover:border-accent/40 hover:text-zinc-950 transition-colors"
-                      >
-                        {lang === "fr" ? "Voir les" : "See all"}{" "}
-                        {activeCategory.productCount.toLocaleString()}{" "}
-                        {lang === "fr" ? "pièces sur" : "parts on"} {activeBrandConfig.siteLabel}
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
-                  )}
                 </>
               )}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* ── PRODUCT DETAIL MODAL ──────────────────────────────────────────── */}
+      <AnimatePresence>
+        {detailProduct && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[65] flex items-center justify-center p-4 md:p-10"
+            onClick={() => setDetailProduct(null)}
+          >
+            <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-md" />
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 280, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-3xl max-h-[88vh] overflow-hidden flex flex-col md:flex-row"
+            >
+              <button
+                onClick={() => setDetailProduct(null)}
+                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white border border-zinc-200 text-zinc-500 hover:text-zinc-950 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              {/* Image */}
+              <div className="md:w-1/2 bg-zinc-50 flex items-center justify-center p-8 min-h-[260px] md:min-h-[420px]">
+                {detailProduct.image ? (
+                  <img
+                    src={detailProduct.image}
+                    alt={lang === "fr" && detailProduct.titleFr ? detailProduct.titleFr : detailProduct.title}
+                    className="max-h-[360px] max-w-full object-contain cursor-zoom-in"
+                    onClick={() => detailProduct.image && setLightboxSrc(detailProduct.image)}
+                  />
+                ) : (
+                  <Package className="h-20 w-20 text-zinc-300" />
+                )}
+              </div>
+
+              {/* Info */}
+              <div className="md:w-1/2 p-7 md:p-8 overflow-y-auto flex flex-col">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent mb-2">{activeBrand}</p>
+                <h2 className="text-xl font-black text-zinc-950 leading-tight mb-2">
+                  {lang === "fr" && detailProduct.titleFr ? detailProduct.titleFr : detailProduct.title}
+                </h2>
+                <p className="text-xs font-mono text-zinc-500 bg-zinc-50 px-2.5 py-1.5 rounded-lg inline-block self-start mb-5">
+                  REF: {detailProduct.sku}
+                </p>
+
+                {detailProduct.attributes && Object.keys(detailProduct.attributes).length > 0 && (
+                  <div className="mb-6">
+                    <div className="flex items-center gap-1.5 text-zinc-400 mb-3">
+                      <Ruler className="h-3.5 w-3.5" />
+                      <span className="text-[10px] font-black uppercase tracking-widest">
+                        {lang === "fr" ? "Caractéristiques" : "Specifications"}
+                      </span>
+                    </div>
+                    <table className="w-full text-sm">
+                      <tbody>
+                        {Object.entries(detailProduct.attributes).map(([k, v]) => (
+                          <tr key={k} className="border-b border-zinc-100 last:border-0">
+                            <td className="py-2 pr-4 text-zinc-500 font-medium">{lang === "fr" ? (ATTR_LABEL_FR[k] || k) : k}</td>
+                            <td className="py-2 text-zinc-950 font-bold text-right">{v}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                <div className="mt-auto pt-4 flex gap-2">
+                  <Button
+                    onClick={() => { addToCart(detailProduct); setDetailProduct(null); }}
+                    disabled={cart.some((i) => i.sku === detailProduct.sku)}
+                    className="flex-1 h-11 rounded-xl font-black uppercase tracking-widest text-[10px] bg-zinc-950 text-white hover:bg-accent disabled:bg-zinc-100 disabled:text-zinc-400"
+                  >
+                    {cart.some((i) => i.sku === detailProduct.sku) ? (
+                      <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" /> Ajouté au devis</span>
+                    ) : (
+                      lang === "fr" ? "Ajouter au devis" : "Add to quote"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── LIGHTBOX ────────────────────────────────────────────────────────── */}
       <AnimatePresence>

@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, Wrench, ShoppingCart, LogOut, Bell, TrendingUp, Briefcase } from "lucide-react";
+import { LayoutDashboard, Wrench, ShoppingCart, LogOut, Bell, TrendingUp, Briefcase, BookOpen } from "lucide-react";
 import { useDGAuth } from "@/contexts/DGAuthContext";
 import { supabaseDG } from "@/lib/supabase";
 import { useLang } from "@/i18n/I18nProvider";
 import vematLogo from "@/assets/vemat-logo.png";
 import type { Notification } from "@/lib/database.types";
 
-const getNav = (t: (k: string) => string) => [
+const getNav = (t: (k: string) => string, lang: string) => [
   { href: "/direction/dashboard", icon: LayoutDashboard, label: t("portal.dg.nav.dashboard"), exact: true },
   { href: "/direction/commandes", icon: ShoppingCart, label: t("portal.dg.nav.orders"), exact: false },
   { href: "/direction/reparations", icon: Wrench, label: t("portal.dg.nav.repairs"), exact: false },
   { href: "/direction/commercial", icon: Briefcase, label: t("portal.dg.nav.commercial"), exact: false },
+  { href: "/direction/catalogues", icon: BookOpen, label: lang === "fr" ? "Catalogues" : "Catalogs", exact: false },
 ];
 
 export function DGLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { profile, signOut } = useDGAuth();
   const { lang, setLang, t } = useLang();
-  const nav = getNav(t);
+  const nav = getNav(t, lang);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showNotifs, setShowNotifs] = useState(false);
 
@@ -59,7 +60,7 @@ export function DGLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-zinc-950 flex">
       <aside className="w-60 bg-zinc-900 border-r border-zinc-800 flex flex-col fixed left-0 top-0 h-full z-40">
         <div className="px-5 py-5 border-b border-zinc-800">
-          <img src={vematLogo} alt="Vemat" className="h-6 brightness-0 invert mb-3" />
+          <img src={vematLogo} alt="Vemat" className="h-12 w-auto brightness-0 invert mb-4" />
           <div className="flex items-center gap-1.5">
             <TrendingUp className="w-3 h-3 text-purple-400" />
             <p className="text-[10px] font-black uppercase tracking-[0.25em] text-purple-400">{t("portal.dg.title")}</p>

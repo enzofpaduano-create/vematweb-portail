@@ -13,6 +13,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { VematAssistant } from "@/components/VematAssistant";
+import { SplashScreen } from "@/components/SplashScreen";
 
 import Home from "@/pages/Home";
 import Grues from "@/pages/Grues";
@@ -23,7 +24,6 @@ import Services from "@/pages/Services";
 import APropos from "@/pages/APropos";
 import Contact from "@/pages/Contact";
 import PiecesDeRechange from "@/pages/PiecesDeRechange";
-import TerexCatalogueTRT35 from "@/pages/TerexCatalogueTRT35";
 import Blog from "@/pages/Blog";
 import Article from "@/pages/Article";
 import ProductPage from "@/pages/ProductPage";
@@ -51,6 +51,9 @@ import TechnicienLogin from "@/pages/technicien/TechnicienLogin";
 import TechnicienMissions from "@/pages/technicien/TechnicienMissions";
 import TechnicienMission from "@/pages/technicien/TechnicienMission";
 import TechnicienHistorique from "@/pages/technicien/TechnicienHistorique";
+import TechnicienCatalogues from "@/pages/technicien/TechnicienCatalogues";
+import TechnicienCataloguesFamily from "@/pages/technicien/TechnicienCataloguesFamily";
+import TechnicienCatalogue from "@/pages/technicien/TechnicienCatalogue";
 
 // Espace direction (DG)
 import DGLogin from "@/pages/direction/DGLogin";
@@ -59,6 +62,9 @@ import DGReparations from "@/pages/direction/DGReparations";
 import DGCommandes from "@/pages/direction/DGCommandes";
 import DGCommandeDetail from "@/pages/direction/DGCommandeDetail";
 import DGCommercial from "@/pages/direction/DGCommercial";
+import DGCatalogues from "@/pages/direction/DGCatalogues";
+import DGCataloguesFamily from "@/pages/direction/DGCataloguesFamily";
+import DGCatalogue from "@/pages/direction/DGCatalogue";
 
 // Espace commercial
 import CommercialLogin from "@/pages/commercial/CommercialLogin";
@@ -104,6 +110,9 @@ function Router() {
       <Route path="/espace-technicien/missions" component={TechnicienMissions} />
       <Route path="/espace-technicien/mission/:id" component={TechnicienMission} />
       <Route path="/espace-technicien/historique" component={TechnicienHistorique} />
+      <Route path="/espace-technicien/catalogues/groupe/:family" component={TechnicienCataloguesFamily} />
+      <Route path="/espace-technicien/catalogues/:slug" component={TechnicienCatalogue} />
+      <Route path="/espace-technicien/catalogues" component={TechnicienCatalogues} />
 
       {/* Espace direction */}
       <Route path="/direction/connexion" component={DGLogin} />
@@ -112,6 +121,9 @@ function Router() {
       <Route path="/direction/commandes" component={DGCommandes} />
       <Route path="/direction/reparations" component={DGReparations} />
       <Route path="/direction/commercial" component={DGCommercial} />
+      <Route path="/direction/catalogues/groupe/:family" component={DGCataloguesFamily} />
+      <Route path="/direction/catalogues/:slug" component={DGCatalogue} />
+      <Route path="/direction/catalogues" component={DGCatalogues} />
 
       {/* Espace commercial */}
       <Route path="/espace-commercial/connexion" component={CommercialLogin} />
@@ -140,7 +152,6 @@ function Router() {
               <Route path="/elevateurs-telescopiques" component={ElevateursTelescopiques} />
               <Route path="/construction" component={Construction} />
               <Route path="/services" component={Services} />
-              <Route path="/pieces-de-rechange/terex/catalogue/trt-35" component={TerexCatalogueTRT35} />
               <Route path="/pieces-de-rechange" component={PiecesDeRechange} />
               <Route path="/blog" component={Blog} />
               <Route path="/blog/:slug" component={Article} />
@@ -173,6 +184,7 @@ function App() {
                 <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
                   <Router />
                 </WouterRouter>
+                <SplashScreen />
                 <Toaster />
               </TooltipProvider>
             </I18nProvider>

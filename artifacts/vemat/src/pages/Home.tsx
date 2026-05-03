@@ -45,7 +45,7 @@ export default function Home() {
       <BlogTicker />
 
       {/* Stats Section */}
-      <section className="py-16 bg-zinc-950 border-t border-zinc-800">
+      <section className="py-16 bg-white border-t border-zinc-200">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatBlock value="10+" label={t("home.statCountries")} delay={0} />
@@ -159,10 +159,10 @@ export default function Home() {
       </section>
 
       {/* African Presence */}
-      <section className="relative py-48 bg-zinc-950 overflow-hidden">
-        <motion.div 
+      <section className="relative py-48 bg-white overflow-hidden">
+        <motion.div
           initial={{ scale: 1.2, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 0.4 }}
+          whileInView={{ scale: 1, opacity: 0.18 }}
           transition={{ duration: 2, ease: "easeOut" }}
           className="absolute inset-0 z-0"
         >
@@ -172,8 +172,8 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent z-1" />
-        
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/40 z-1" />
+
         <div className="container relative z-10 mx-auto px-4 md:px-6">
           <div className="max-w-3xl">
             <motion.div
@@ -182,14 +182,14 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut" }}
             >
-              <h2 className="text-3xl md:text-7xl font-heading font-extrabold text-white mb-8 leading-tight tracking-tighter">
+              <h2 className="text-3xl md:text-7xl font-heading font-extrabold text-zinc-950 mb-8 leading-tight tracking-tighter">
                 {t("home.africaTitle")} <span className="text-accent underline decoration-accent/30 underline-offset-8">{t("home.africaTitleAccent")}</span>.
               </h2>
-              <p className="text-lg md:text-2xl text-zinc-400 mb-12 leading-relaxed font-medium">
+              <p className="text-lg md:text-2xl text-zinc-600 mb-12 leading-relaxed font-medium">
                 {t("home.africaSubtitle")}
               </p>
               <Link href="/a-propos">
-                <Button size="lg" className="bg-white text-zinc-950 hover:bg-accent hover:text-white rounded-full font-extrabold px-10 h-16 uppercase tracking-widest transition-all duration-300 hover:scale-105">
+                <Button size="lg" className="bg-zinc-950 text-white hover:bg-accent hover:text-white rounded-full font-extrabold px-10 h-16 uppercase tracking-widest transition-all duration-300 hover:scale-105">
                   {t("home.africaCta")}
                 </Button>
               </Link>
@@ -233,14 +233,14 @@ export default function Home() {
       </section>
 
       {/* Forms CTA Section */}
-      <section className="py-24 bg-zinc-950">
+      <section className="py-24 bg-white border-t border-zinc-200">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <p className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-3">Services en ligne</p>
-            <h2 className="text-3xl md:text-4xl font-heading font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-heading font-extrabold text-zinc-950 tracking-tight">
               Besoin d'un devis ou d'une intervention ?
             </h2>
-            <p className="text-zinc-400 mt-4 max-w-xl mx-auto">
+            <p className="text-zinc-600 mt-4 max-w-xl mx-auto">
               Déposez votre demande directement en ligne. Notre équipe vous répond sous 24h.
             </p>
           </div>
@@ -250,16 +250,16 @@ export default function Home() {
               <motion.div
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="group relative bg-gradient-to-br from-sky-500/10 to-sky-600/5 border border-sky-500/20 hover:border-sky-400/50 rounded-2xl p-8 cursor-pointer transition-colors"
+                className="group relative bg-white border border-zinc-200 hover:border-accent/40 hover:shadow-soft rounded-2xl p-8 cursor-pointer transition-all"
               >
-                <div className="w-12 h-12 bg-sky-500/15 rounded-xl flex items-center justify-center mb-5">
-                  <FileText className="w-6 h-6 text-sky-400" />
+                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-5">
+                  <FileText className="w-6 h-6 text-accent" />
                 </div>
-                <h3 className="text-xl font-black text-white mb-2">Demande de devis</h3>
-                <p className="text-sm text-zinc-400 leading-relaxed mb-6">
+                <h3 className="text-xl font-black text-zinc-950 mb-2">Demande de devis</h3>
+                <p className="text-sm text-zinc-600 leading-relaxed mb-6">
                   Grues, nacelles, élévateurs, pièces de rechange — obtenez un devis personnalisé pour votre projet.
                 </p>
-                <div className="inline-flex items-center gap-2 text-sky-400 font-bold text-sm group-hover:gap-3 transition-all">
+                <div className="inline-flex items-center gap-2 text-accent font-bold text-sm group-hover:gap-3 transition-all">
                   Faire une demande <ArrowRight className="w-4 h-4" />
                 </div>
               </motion.div>
@@ -270,16 +270,16 @@ export default function Home() {
               <motion.div
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="group relative bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/20 hover:border-orange-400/50 rounded-2xl p-8 cursor-pointer transition-colors"
+                className="group relative bg-zinc-950 border border-zinc-950 hover:border-accent rounded-2xl p-8 cursor-pointer transition-all"
               >
-                <div className="w-12 h-12 bg-orange-500/15 rounded-xl flex items-center justify-center mb-5">
-                  <Wrench className="w-6 h-6 text-orange-400" />
+                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-5">
+                  <Wrench className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-black text-white mb-2">Demande d'intervention</h3>
-                <p className="text-sm text-zinc-400 leading-relaxed mb-6">
+                <p className="text-sm text-zinc-300 leading-relaxed mb-6">
                   Panne, maintenance, entretien — signalez un problème sur votre machine avec photos et documents.
                 </p>
-                <div className="inline-flex items-center gap-2 text-orange-400 font-bold text-sm group-hover:gap-3 transition-all">
+                <div className="inline-flex items-center gap-2 text-accent font-bold text-sm group-hover:gap-3 transition-all">
                   Signaler un problème <ArrowRight className="w-4 h-4" />
                 </div>
               </motion.div>
