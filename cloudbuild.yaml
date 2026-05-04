@@ -1,0 +1,44 @@
+# Cloud Build configuration for the api-server in this monorepo.
+# Builds the Docker image using the repo root as build context (so the
+# Dockerfile can COPY files like package.json, pnpm-lock.yaml, lib/ from root)
+# and the Dockerfile at artifacts/api-server/Dockerfile.
+# Then pushes to GCR and deploys to Cloud Run.
+
+steps:
+  # 1. Build the image with repo root as build context
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/vematweb-portail:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/vematweb-portail:latest'
+      - '-f'
+      - 'artifacts/api-server/Dockerfile'
+      - '.'
+
+  # 2. Push the image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - 'gcr.io/$PROJECT_ID/vematweb-portail'
+
+  # 3. Deploy the new revision to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'vematweb-portail'
+      - '--image=gcr.io/$PROJECT_ID/vematweb-portail:$COMMIT_SHA'
+      - '--region=europe-southwest1'
+      - '--platform=managed'
+      - '--quiet'
+
+images:
+  - 'gcr.io/$PROJECT_ID/vematweb-portail:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/vematweb-portail:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
