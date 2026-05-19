@@ -7543,7 +7543,7 @@ const baseProductDetails: Record<string, ProductDetail> = {
     },
     "images": [
       {
-        "path": "/images/products/hth-10-10/01-5ddadc22e7ee.png"
+        "path": "/images/products/hth-10-10/01-5ddadc22e7ee.jpg"
       }
     ],
     "specifications": {},
@@ -7618,7 +7618,7 @@ const baseProductDetails: Record<string, ProductDetail> = {
     },
     "images": [
       {
-        "path": "/images/products/hth-20-10/01-6a89e58fe51d.png"
+        "path": "/images/products/hth-20-10/01-6a89e58fe51d.jpg"
       }
     ],
     "specifications": {},
@@ -7643,7 +7643,7 @@ const baseProductDetails: Record<string, ProductDetail> = {
     },
     "images": [
       {
-        "path": "/images/products/hth-25-11/01-3aa41000a02d.png"
+        "path": "/images/products/hth-25-11/01-3aa41000a02d.jpg"
       }
     ],
     "specifications": {},
