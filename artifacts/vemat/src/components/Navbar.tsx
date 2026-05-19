@@ -80,10 +80,10 @@ export function Navbar() {
                 alt="Vemat Group"
                 className={`w-auto object-contain transition-all duration-500 ${
                   isScrolled
-                    ? "h-10 md:h-11 brightness-0"
+                    ? "h-12 md:h-14 brightness-0"
                     : isHome
-                      ? "h-16 md:h-20 brightness-0 invert drop-shadow-[0_0_20px_rgba(255,255,255,0.6)]"
-                      : "h-11 md:h-12 brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+                      ? "h-20 md:h-24 brightness-0 invert drop-shadow-[0_0_20px_rgba(255,255,255,0.6)]"
+                      : "h-16 md:h-20 brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
                 }`}
               />
             </div>
@@ -130,32 +130,32 @@ export function Navbar() {
               {/* Divider */}
               <div className={`w-px h-5 ${isScrolled ? "bg-zinc-200" : "bg-white/20"}`} />
 
-              {/* Devis machine — texte + icône */}
+              {/* Devis machine — icône (texte à partir de 2xl) */}
               <Link
                 href="/demande-devis"
                 title={t("nav.devisRequest")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-2 2xl:px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${
                   isScrolled
                     ? "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100"
                     : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 shrink-0" />
-                <span>{t("nav.devisShort")}</span>
+                <span className="hidden 2xl:inline">{t("nav.devisShort")}</span>
               </Link>
 
-              {/* Pièces détachées — texte + icône */}
+              {/* Pièces détachées — icône (texte à partir de 2xl) */}
               <Link
                 href="/pieces-de-rechange"
                 title={t("nav.pdrAction")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-2 2xl:px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${
                   isScrolled
                     ? "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100"
                     : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <Package className="w-3.5 h-3.5 shrink-0" />
-                <span>{t("nav.pdrAction")}</span>
+                <span className="hidden 2xl:inline">{t("nav.pdrAction")}</span>
               </Link>
 
               {/* SAV — bouton principal rouge (action urgente) */}

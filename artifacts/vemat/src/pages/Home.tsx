@@ -9,7 +9,6 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { BrandStrip } from "@/components/BrandStrip";
 import { CTASection } from "@/components/CTASection";
 import { SectionHeader } from "@/components/SectionHeader";
-import { StatBlock } from "@/components/StatBlock";
 import { OfficesSection } from "@/components/OfficesSection";
 import { categories } from "@/data/categories";
 import { useLang } from "@/i18n/I18nProvider";
@@ -43,18 +42,6 @@ export default function Home() {
       />
 
       <BlogTicker />
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white border-t border-zinc-200">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatBlock value="10+" label={t("home.statCountries")} delay={0} />
-            <StatBlock value="150+" label={t("home.statProjects")} delay={0.1} />
-            <StatBlock value="24/7" label={t("home.statSupport")} delay={0.2} />
-            <StatBlock value="5" label={t("home.statBrands")} delay={0.3} />
-          </div>
-        </div>
-      </section>
 
       {/* Categories Grid */}
       <section className="py-24 bg-zinc-50">

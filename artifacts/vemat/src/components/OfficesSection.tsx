@@ -67,15 +67,15 @@ export function OfficesSection() {
             <AfricaMap />
           </motion.div>
 
-          <div className="lg:col-span-5 space-y-2">
+          <div className="lg:col-span-5 space-y-2 overflow-hidden">
             {offices.map((o, i) => {
               const Icon = iconForType[o.type];
               const isHQ = o.type === "hq";
               return (
                 <motion.div
                   key={o.id}
-                  initial={{ opacity: 0, x: 24 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.6, ease: "easeOut" }}
                   className={`group relative p-4 rounded-2xl border transition-all duration-500 ${

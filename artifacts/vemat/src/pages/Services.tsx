@@ -3,22 +3,18 @@ import { Link } from "wouter";
 import { CTASection } from "@/components/CTASection";
 import { useLang } from "@/i18n/I18nProvider";
 import { motion } from "framer-motion";
-import { 
-  ShoppingCart, 
-  Key, 
-  Wrench, 
-  Settings, 
-  Lightbulb, 
-  Truck,
+import {
+  ShoppingCart,
+  Wrench,
+  Settings,
+  Lightbulb,
   ArrowRight,
   CheckCircle2
 } from "lucide-react";
 import venteImg from "@/assets/services/vente.jpg";
-import locationImg from "@/assets/services/location.jpg";
 import savImg from "@/assets/services/sav.png";
 import piecesImg from "@/assets/services/pieces.jpg";
 import conseilImg from "@/assets/services/conseil.jpg";
-import depannageImg from "@/assets/services/depannage.jpg";
 
 export default function Services() {
   const { t } = useLang();
@@ -27,23 +23,19 @@ export default function Services() {
 
   const serviceIcons = [
     ShoppingCart,
-    Key,
     Wrench,
     Settings,
-    Lightbulb,
-    Truck
+    Lightbulb
   ];
 
   const serviceImages = [
     venteImg,
-    locationImg,
     savImg,
     piecesImg,
-    conseilImg,
-    depannageImg
+    conseilImg
   ];
 
-  const services = [0, 1, 2, 3, 4, 5].map((i) => ({
+  const services = [0, 1, 2, 3].map((i) => ({
     title: t(`services.list.${i}.title`),
     description: t(`services.list.${i}.description`),
     icon: serviceIcons[i],

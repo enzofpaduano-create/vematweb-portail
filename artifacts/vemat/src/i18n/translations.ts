@@ -126,12 +126,10 @@ export const translations = {
     },
     services: {
       list: [
-        { title: "Vente d'engins", description: "Distribution de machines industrielles et de construction des plus grandes marques mondiales, adaptées aux exigences du marché africain." },
-        { title: "Location courte et longue durée", description: "Des solutions de location flexibles avec un parc matériel récent et parfaitement entretenu pour accompagner vos pics d'activité." },
-        { title: "SAV complet", description: "Un service après-vente réactif et professionnel garantissant la disponibilité maximale de vos équipements sur site." },
+        { title: "Vente d'engins", description: "Distribution de machines industrielles et de construction des plus grandes marques mondiales, adaptées aux exigences du marché africain. Solutions de location et de vente longue durée également disponibles." },
+        { title: "SAV — dépannage et réparation", description: "Service après-vente réactif et professionnel : interventions rapides sur site par nos techniciens qualifiés pour garantir la disponibilité maximale de vos équipements et minimiser vos temps d'arrêt." },
         { title: "Pièces de rechange d'origine", description: "Fourniture rapide de pièces détachées certifiées constructeur pour assurer la longévité de votre flotte." },
         { title: "Conseils techniques", description: "Accompagnement d'experts pour dimensionner vos besoins et choisir les équipements les plus adaptés à vos chantiers." },
-        { title: "Dépannage et réparation", description: "Interventions rapides sur site par nos techniciens qualifiés pour minimiser vos temps d'arrêt de production." },
       ],
       pageTitle: "Des services industriels de pointe",
       pageSub: "Un accompagnement complet pour garantir la continuité et l'efficacité de vos opérations à travers toute l'Afrique.",
@@ -1122,12 +1120,10 @@ export const translations = {
     },
     services: {
       list: [
-        { title: "Equipment sales", description: "Distribution of industrial and construction machines from the world's leading brands, tailored to the demands of the African market." },
-        { title: "Short and long-term rental", description: "Flexible rental solutions backed by a recent, fully maintained fleet to support your activity peaks." },
-        { title: "Comprehensive after-sales service", description: "A responsive and professional after-sales service guaranteeing maximum availability of your equipment on site." },
+        { title: "Equipment sales", description: "Distribution of industrial and construction machines from the world's leading brands, tailored to the demands of the African market. Long-term rental and sales solutions also available." },
+        { title: "After-sales — troubleshooting & repair", description: "Responsive professional after-sales service: fast on-site interventions by our qualified technicians to maximize equipment availability and minimize downtime." },
         { title: "Original spare parts", description: "Rapid supply of manufacturer-certified spare parts to ensure the longevity of your fleet." },
         { title: "Technical consulting", description: "Expert support to size your needs and select the equipment best suited to your jobsites." },
-        { title: "Troubleshooting and repair", description: "Fast on-site interventions by our qualified technicians to minimize your production downtime." },
       ],
       pageTitle: "Cutting-edge industrial services",
       pageSub: "Comprehensive support to guarantee the continuity and efficiency of your operations across all of Africa.",

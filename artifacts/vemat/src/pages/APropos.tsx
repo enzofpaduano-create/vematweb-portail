@@ -2,6 +2,7 @@ import { useSEO, useScrollTop } from "@/hooks/use-seo";
 import { SectionHeader } from "@/components/SectionHeader";
 import { CTASection } from "@/components/CTASection";
 import { BrandCard } from "@/components/BrandCard";
+import { OfficesSection } from "@/components/OfficesSection";
 import { useLang } from "@/i18n/I18nProvider";
 import { brands } from "@/data/brands";
 import { motion } from "framer-motion";
@@ -146,6 +147,9 @@ export default function APropos() {
           </div>
         </div>
       </section>
+
+      {/* Our offices around Africa */}
+      <OfficesSection />
 
       {/* Network Section - Refined */}
       <section className="py-32 bg-white">

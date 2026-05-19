@@ -8,6 +8,7 @@ import { AdminLayout } from "./AdminLayout";
 import { AdminGuard } from "./AdminGuard";
 import { supabaseAdmin } from "@/lib/supabase";
 import type { PublicDevisRequest, PublicInterventionRequest, FormDevisStatus, FormInterventionStatus, InterventionUrgency, Technician } from "@/lib/database.types";
+import { isMachineCategory } from "@/lib/constants";
 import { useLang } from "@/i18n/I18nProvider";
 
 type Tab = "devis" | "interventions";
@@ -571,9 +572,8 @@ export default function AdminDemandes() {
   const q = search.toLowerCase().trim();
 
   // Manager only handles spare parts (pièces de rechange)
-  const MACHINE_CATEGORIES = ["Grues", "Nacelles & plateformes élévatrices", "Élévateurs télescopiques", "Matériaux de construction"];
   const filteredDevis = devisItems.filter((d) => {
-    if (d.product_category && MACHINE_CATEGORIES.includes(d.product_category)) return false;
+    if (isMachineCategory(d.product_category)) return false;
     const matchStatus = statusFilter === "all" || d.status === statusFilter;
     const matchSearch = !q || [d.reference, d.company_name, d.contact_name, d.contact_email, d.product_model].some(
       (v) => v?.toLowerCase().includes(q)

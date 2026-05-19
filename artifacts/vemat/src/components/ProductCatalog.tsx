@@ -28,17 +28,17 @@ const SPEC_GROUPS = [
   // Cranes — capacity
   {
     label: { fr: "Capacité max.", en: "Max Capacity" },
-    keys: ["Capacité max.", "Capacité nominale", "Max Capacity", "Capacité de levage", "Charge maximale"],
+    keys: ["Capacité max.", "Capacité nominale", "Max Capacity", "Max. Crane Capacity", "Capacity", "Capacité de levage", "Charge maximale", "Max. Load Moment"],
   },
   // Cranes — boom length
   {
     label: { fr: "Longueur flèche", en: "Boom Length" },
-    keys: ["Longueur max. de la flèche principale", "Longueur flèche principale", "Max Jib Length", "Longueur de flèche"],
+    keys: ["Longueur max. de la flèche principale", "Longueur flèche principale", "Max Jib Length", "Longueur de flèche", "Extension flèche / Jib"],
   },
   // Cranes — hook height / reach
   {
     label: { fr: "Portée / Hauteur", en: "Reach / Height" },
-    keys: ["Hauteur de tête max.", "Portée max.", "Capacity at Max Radius", "Hauteur max. crochet"],
+    keys: ["Hauteur de tête max.", "Max. Tip Height", "Portée max.", "Capacity at Max Radius", "Hauteur max. crochet"],
   },
   // Nacelles — platform height
   {
@@ -158,11 +158,11 @@ export function ProductCatalog({ subcategories }: ProductCatalogProps) {
                   const logo = getBrandLogo(sub.brand);
                   if (!logo) return null;
                   return (
-                    <div className={`rounded-lg px-3 py-2 shadow-sm ${logo.darkBg ? "bg-zinc-800" : "bg-white"}`}>
+                    <div className={`rounded-lg px-5 py-3 shadow-sm ${logo.darkBg ? "bg-zinc-800" : "bg-white"}`}>
                       <img
                         src={logo.src}
                         alt={sub.brand}
-                        className="h-6 w-auto object-contain"
+                        className="h-12 w-auto object-contain"
                         draggable={false}
                       />
                     </div>
@@ -198,12 +198,12 @@ export function ProductCatalog({ subcategories }: ProductCatalogProps) {
                       data-testid={`model-${model.name}`}
                     >
                       {/* Model name row */}
-                      <div className="flex items-center gap-3 px-4 py-4">
-                        <Package className="h-5 w-5 text-accent shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                        <span className="font-mono text-sm font-bold text-zinc-900 group-hover:text-white truncate transition-colors duration-300">
+                      <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-4">
+                        <Package className="h-4 w-4 sm:h-5 sm:w-5 text-accent shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                        <span className="font-mono text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-white break-all transition-colors duration-300 min-w-0">
                           {model.name}
                         </span>
-                        <ArrowRight className="h-4 w-4 text-accent ml-auto opacity-0 group-hover:opacity-100 transform translate-x-3 group-hover:translate-x-0 transition-all duration-300" />
+                        <ArrowRight className="hidden sm:block h-4 w-4 text-accent ml-auto opacity-0 group-hover:opacity-100 transform translate-x-3 group-hover:translate-x-0 transition-all duration-300" />
                       </div>
 
                       {/* Expandable specs */}

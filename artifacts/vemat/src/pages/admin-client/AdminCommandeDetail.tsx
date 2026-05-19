@@ -8,6 +8,13 @@ import { OrderTimeline } from "@/components/espace-client/StatusTimeline";
 import { supabaseAdmin } from "@/lib/supabase";
 import type { DevisRequest, Company, OrderStatus, OrderItem } from "@/lib/database.types";
 import { ORDER_STATUSES } from "@/lib/database.types";
+import {
+  sendOrderQuoteSentEmail,
+  sendOrderPaidEmail,
+  sendOrderInDeliveryEmail,
+  sendOrderDeliveredEmail,
+  sendOrderCancelledEmail,
+} from "@/lib/clientEmails";
 import { useLang } from "@/i18n/I18nProvider";
 
 export default function AdminCommandeDetail() {
@@ -94,21 +101,18 @@ export default function AdminCommandeDetail() {
         old_status: oldStatus,
         new_status: status,
       });
-      if (status === "devis_envoye" || status === "en_livraison") {
-        const notifTitle = status === "devis_envoye"
-          ? `Devis envoyé : ${order.reference}`
-          : `Commande en livraison : ${order.reference}`;
-        const notifMsg = status === "devis_envoye"
-          ? `Devis de ${amount ? parseFloat(amount).toLocaleString("fr-FR") : "—"} MAD envoyé au client — en attente de validation.`
-          : `La commande ${order.reference} est en cours de livraison.`;
-        await supabaseAdmin.from("notifications").insert({
-          user_id: order.created_by ?? order.company_id,
-          title: notifTitle,
-          message: notifMsg,
-          read: false,
-          type: status === "devis_envoye" ? "devis_envoye" : "commande_livraison",
-          link: `/espace-manager/commandes/${order.id}`,
-        });
+      // Email automatique au client à chaque transition de statut (cf. lib/clientEmails.ts).
+      const amountNum = amount ? parseFloat(amount) : null;
+      if (status === "devis_envoye") {
+        await sendOrderQuoteSentEmail({ orderId: order.id, reference: order.reference, amount: amountNum });
+      } else if (status === "commande_payee") {
+        await sendOrderPaidEmail({ orderId: order.id, reference: order.reference });
+      } else if (status === "en_livraison") {
+        await sendOrderInDeliveryEmail({ orderId: order.id, reference: order.reference, carrier: order.carrier ?? null, trackingNumber: order.tracking_number ?? null });
+      } else if (status === "livree") {
+        await sendOrderDeliveredEmail({ orderId: order.id, reference: order.reference });
+      } else if (status === "annulee") {
+        await sendOrderCancelledEmail({ orderId: order.id, reference: order.reference });
       }
     }
 

@@ -8,6 +8,11 @@ import { RepairTimeline } from "@/components/espace-client/StatusTimeline";
 import { supabaseAdmin } from "@/lib/supabase";
 import type { RepairRequest, Company, Chantier, Technician, RepairStatus } from "@/lib/database.types";
 import { REPAIR_STATUSES } from "@/lib/database.types";
+import {
+  sendRepairScheduledEmail,
+  sendRepairInProgressEmail,
+  sendRepairCompletedEmail,
+} from "@/lib/clientEmails";
 import { useLang } from "@/i18n/I18nProvider";
 
 interface ChecklistItem { id: string; label: string; done: boolean; }
@@ -96,6 +101,20 @@ export default function AdminReparationDetail() {
         entity_type: "reparation", entity_id: repair.id,
         old_status: oldStatus, new_status: form.status,
       });
+      // Email automatique au client à chaque transition (cf. lib/clientEmails.ts).
+      if (form.status === "planifiee") {
+        const tech = technicians.find((tt) => tt.id === form.technician_id);
+        await sendRepairScheduledEmail({
+          repairId: repair.id,
+          reference: repair.reference,
+          scheduledDate: form.scheduled_date || null,
+          technicianName: tech?.name ?? null,
+        });
+      } else if (form.status === "en_cours") {
+        await sendRepairInProgressEmail({ repairId: repair.id, reference: repair.reference });
+      } else if (form.status === "terminee") {
+        await sendRepairCompletedEmail({ repairId: repair.id, reference: repair.reference });
+      }
     }
     setSaving(false);
     load();

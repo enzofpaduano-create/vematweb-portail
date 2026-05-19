@@ -226,7 +226,7 @@ function ProductCard({
             {displayTitle}
           </h3>
         )}
-        <p className="text-[10px] font-mono text-zinc-400 bg-zinc-50 px-2 py-1 rounded-lg inline-block mb-4">
+        <p className="text-[10px] font-mono text-zinc-400 bg-zinc-50 px-2 py-1 rounded-lg block break-all mb-4">
           REF: {product.sku}
         </p>
 
@@ -309,7 +309,7 @@ function VematProductCard({
         <h3 className="text-sm font-bold text-zinc-950 leading-snug mb-2 line-clamp-2 flex-1">
           {product.title}
         </h3>
-        <p className="text-[10px] font-mono text-zinc-400 bg-zinc-50 px-2 py-1 rounded-lg inline-block mb-1">
+        <p className="text-[10px] font-mono text-zinc-400 bg-zinc-50 px-2 py-1 rounded-lg block break-all mb-1">
           REF: {product.sku}
         </p>
         <p className="text-[10px] font-semibold text-green-600 mb-4">
@@ -424,6 +424,10 @@ export default function PiecesDeRechange() {
     try {
       const res = await fetch("/vemat-stock-catalog.json");
       const data: VematCatalog = await res.json();
+      const EXCLUDED_FAMILIES = ["MARK", "OUTLEV", "OUT", "OUTHYD", "OUTMEC", "OUTELEC", "ACP", "SAV", "VER"];
+      data.families = data.families.filter((f) => !EXCLUDED_FAMILIES.includes(f.code));
+      data.totalFamilies = data.families.length;
+      data.totalProducts = data.families.reduce((sum, f) => sum + f.productCount, 0);
       setVematCatalog(data);
     } catch {
       // silent
@@ -540,7 +544,12 @@ export default function PiecesDeRechange() {
     if (!vematCatalog) return [];
     const q = search.toLowerCase();
     if (!q) return vematCatalog.families;
-    return vematCatalog.families.filter((f) => f.name.toLowerCase().includes(q) || f.code.toLowerCase().includes(q));
+    return vematCatalog.families.filter(
+      (f) =>
+        f.name.toLowerCase().includes(q) ||
+        f.code.toLowerCase().includes(q) ||
+        f.models.some((m) => m.toLowerCase().includes(q)),
+    );
   }, [vematCatalog, search]);
 
   const filteredVematProducts = useMemo(() => {
@@ -551,7 +560,12 @@ export default function PiecesDeRechange() {
     }
     const q = search.toLowerCase();
     if (!q) return prods;
-    return prods.filter((p) => p.title.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q));
+    return prods.filter(
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.sku.toLowerCase().includes(q) ||
+        (p.model ?? "").toLowerCase().includes(q),
+    );
   }, [activeFamily, activeModel, search]);
 
   const isVemat = vematView !== "off";
@@ -636,7 +650,7 @@ export default function PiecesDeRechange() {
         : "Official original parts catalog. Select a brand to browse categories.",
     searchCat: lang === "fr" ? "Rechercher une catégorie..." : "Search a category...",
     searchFam: lang === "fr" ? "Rechercher une famille..." : "Search a family...",
-    searchPart: lang === "fr" ? "Rechercher par référence ou nom..." : "Search by reference or name...",
+    searchPart: lang === "fr" ? "Rechercher par référence, nom ou modèle..." : "Search by reference, name, or model...",
     backToBrands: lang === "fr" ? "Retour aux marques" : "Back to brands",
     backToCats: lang === "fr" ? "Retour aux catégories" : "Back to categories",
     backToFamilies: lang === "fr" ? "Retour aux familles" : "Back to families",
@@ -1043,7 +1057,7 @@ export default function PiecesDeRechange() {
                       <img src={vematLogo} alt="Vemat" className="h-full w-full object-contain" style={{ filter: "brightness(0) invert(1)" }} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
                         <span className="text-2xl font-heading font-extrabold text-white tracking-tight">
                           Stock Vemat
                         </span>
@@ -1053,8 +1067,8 @@ export default function PiecesDeRechange() {
                       </div>
                       <p className="text-zinc-400 text-sm font-medium">
                         {lang === "fr"
-                          ? "2 724 pièces disponibles · 25 familles · Stock Vemat Maroc"
-                          : "2,724 parts available · 25 families · Vemat Morocco stock"}
+                          ? "Pièces disponibles en stock · Vemat Maroc"
+                          : "Parts available in stock · Vemat Morocco"}
                       </p>
                     </div>
                   </div>
@@ -1088,7 +1102,7 @@ export default function PiecesDeRechange() {
                         />
                       </div>
                       <div>
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
                           <span className="text-2xl font-heading font-extrabold text-zinc-950 tracking-tight">
                             {brand.label}
                           </span>

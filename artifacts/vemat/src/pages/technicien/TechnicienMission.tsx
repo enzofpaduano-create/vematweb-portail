@@ -9,6 +9,7 @@ import { TechnicienLayout } from "./TechnicienLayout";
 import { useTechnicienAuth } from "@/contexts/TechnicienAuthContext";
 import { supabaseTech } from "@/lib/supabase";
 import type { RepairRequest, Company, Chantier, RepairStatus } from "@/lib/database.types";
+import { sendRepairInProgressEmail, sendRepairCompletedEmail } from "@/lib/clientEmails";
 
 interface ChecklistItem { id: string; label: string; done: boolean; }
 interface Attachment { name: string; url: string; type: string; }
@@ -80,6 +81,9 @@ export default function TechnicienMission() {
     if (!mission) return;
     setSaving(true);
     await supabaseTech.from("repair_requests").update({ status: newStatus }).eq("id", mission.id);
+    if (newStatus === "en_cours") {
+      await sendRepairInProgressEmail({ repairId: mission.id, reference: mission.reference });
+    }
     setSaving(false);
     setMission((m) => m ? { ...m, status: newStatus } : m);
   };
@@ -117,6 +121,7 @@ export default function TechnicienMission() {
           link: `/espace-manager/reparations/${mission.id}`,
         });
       }
+      await sendRepairCompletedEmail({ repairId: mission.id, reference: mission.reference });
     }
     if (reportPhotos.length > 0) setTechPhotos(mergedPhotos);
     setReportPhotos([]);

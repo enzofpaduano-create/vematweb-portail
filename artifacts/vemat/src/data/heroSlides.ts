@@ -1,4 +1,4 @@
-const SLIDE_COUNT = 98;
+const SLIDE_COUNT = 56;
 const BASE = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
 
 export const heroSlides: string[] = Array.from({ length: SLIDE_COUNT }, (_, i) => {

@@ -5,6 +5,7 @@ import { useCommercialAuth } from "@/contexts/CommercialAuthContext";
 import { supabaseCommercial } from "@/lib/supabase";
 import type { CommercialSale, PublicDevisRequest, SaleStatus } from "@/lib/database.types";
 import { catalog } from "@/data/products";
+import { MACHINE_CATEGORIES } from "@/lib/constants";
 import { useLang } from "@/i18n/I18nProvider";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -52,7 +53,7 @@ export default function CommercialVentes() {
       .select("*").eq("commercial_id", commercial.id).order("created_at", { ascending: false });
     setSales(data ?? []);
     const { data: leads } = await supabaseCommercial.from("form_devis").select("*")
-      .in("product_category", ["Grues", "Nacelles & plateformes élévatrices", "Élévateurs télescopiques", "Matériaux de construction"])
+      .in("product_category", MACHINE_CATEGORIES as unknown as string[])
       .neq("status", "converti")
       .order("created_at", { ascending: false });
     setIncomingDevis((leads ?? []) as PublicDevisRequest[]);

@@ -6,6 +6,7 @@ import { AdminGuard } from "./AdminGuard";
 import { RepairStatusBadge } from "@/components/espace-client/StatusBadge";
 import { supabaseAdmin } from "@/lib/supabase";
 import type { DevisRequest, RepairRequest, Company, Technician } from "@/lib/database.types";
+import { sendOrderInDeliveryEmail } from "@/lib/clientEmails";
 import { useLang } from "@/i18n/I18nProvider";
 
 type RepairWithCompany = RepairRequest & { company?: Company };
@@ -143,13 +144,12 @@ export default function AdminDashboard() {
       old_status: "commande_payee",
       new_status: "en_livraison",
     });
-    await supabaseAdmin.from("notifications").insert({
-      user_id: order.created_by ?? order.company_id,
-      title: `Commande en livraison : ${order.reference}`,
-      message: `Votre commande est en cours d'acheminement${order.quote_amount ? ` — ${order.quote_amount.toLocaleString("fr-FR")} MAD` : ""}.`,
-      read: false,
-      type: "commande_livraison",
-      link: `/espace-client/commandes/${order.id}`,
+    // Email automatique au client (cf. lib/clientEmails.ts).
+    await sendOrderInDeliveryEmail({
+      orderId: order.id,
+      reference: order.reference,
+      carrier: order.carrier ?? null,
+      trackingNumber: order.tracking_number ?? null,
     });
     setActiveOrders((prev) =>
       prev.map((o) => o.id === order.id ? { ...o, status: "en_livraison" as const } : o)

@@ -22,13 +22,13 @@ export function BrandCard({ brand, index = 0 }: Props) {
         href={brand.website}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-zinc-50 border-b border-zinc-200 h-40 flex items-center justify-center p-8 group-hover:bg-white transition-colors"
+        className="bg-zinc-50 border-b border-zinc-200 h-72 flex items-center justify-center p-10 group-hover:bg-white transition-colors"
         aria-label={`${t("brands.visitSite")} ${brand.name}`}
       >
         <img
           src={brand.logo}
           alt={brand.name}
-          className="max-h-20 w-auto object-contain"
+          className="max-h-44 w-auto object-contain"
           loading="lazy"
         />
       </a>
